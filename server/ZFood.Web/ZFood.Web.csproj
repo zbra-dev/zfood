@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZFood.Core.API\ZFood.Core.API.csproj" />
+    <ProjectReference Include="..\ZFood.Core\ZFood.Core.csproj" />
+    <ProjectReference Include="..\ZFood.Model\ZFood.Model.csproj" />
+    <ProjectReference Include="..\ZFood.Persistence.API\ZFood.Persistence.API.csproj" />
+    <ProjectReference Include="..\ZFood.Persistence\ZFood.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

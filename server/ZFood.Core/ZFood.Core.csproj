@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZFood.Core.API\ZFood.Core.API.csproj" />
+    <ProjectReference Include="..\ZFood.Persistence.API\ZFood.Persistence.API.csproj" />
+    <ProjectReference Include="..\ZFood.Model\ZFood.Model.csproj" />
+  </ItemGroup>
+</Project>
