@@ -6,7 +6,7 @@ using ZFood.Model;
 
 namespace ZFood.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RestaurantsController : ControllerBase
     {
@@ -17,14 +17,14 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
-        // GET api/values
+        // GET restaurants
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
+        // GET restaurants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Restaurant>> Get(string id)
         {
@@ -32,19 +32,19 @@ namespace ZFood.Web.Controllers
             return restaurant;
         }
 
-        // POST api/values
+        // POST restaurants
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT restaurants/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE restaurants/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
