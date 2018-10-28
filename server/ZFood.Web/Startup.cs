@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -28,6 +29,14 @@ namespace ZFood.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddDbContext<ZFoodDbContext>(o =>
+            {
+                o.UseInMemoryDatabase("ZFood_Dev");
+                // Use NoTracking by default
+                // https://docs.microsoft.com/en-us/ef/core/querying/tracking#no-tracking-queries
+                o.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -51,7 +60,7 @@ namespace ZFood.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ZFoodDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +70,8 @@ namespace ZFood.Web
             {
                 app.UseHsts();
             }
+
+            dbContext.Database.EnsureCreated();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
