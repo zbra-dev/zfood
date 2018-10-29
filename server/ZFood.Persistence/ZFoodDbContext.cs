@@ -23,8 +23,8 @@ namespace ZFood.Persistence
             modelBuilder.Entity<UserEntity>().HasData(
                 new UserEntity { Id = "1", Name = "John Doe" });
             modelBuilder.Entity<RestaurantEntity>().HasData(
-                new RestaurantEntity { Id = "1", Name = "Example Restaurant 1" },
-                new RestaurantEntity { Id = "2", Name = "Example Restaurant 2" });
+                new RestaurantEntity { Id = "1", Name = "Example Restaurant 1", Address = "Rua das Flores, 27" },
+                new RestaurantEntity { Id = "2", Name = "Example Restaurant 2", Address = "Rua dos Pinheiros, 7777" });
             modelBuilder.Entity<VisitEntity>().HasData(
                 new VisitEntity { Id = "1", UserId = "1", RestaurantId = "1", Rate = 3 });
         }
