@@ -17,10 +17,17 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
-        // GET restaurants
+        /// <summary>
+        /// Searches for restaurants
+        /// </summary>
+        /// <param name="take">Number of restaurants to take</param>
+        /// <param name="skip">Number of restaurants to skip</param>
+        /// <param name="query">Query</param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> Get(int? take, int? skip, string query)
         {
+            // TODO: Throw error if take or skip are empty
             return new string[] { "value1", "value2" };
         }
 
