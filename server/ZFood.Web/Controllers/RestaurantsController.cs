@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Model;
+using ZFood.Web.DTO;
+using ZFood.Web.Extensions;
 
 namespace ZFood.Web.Controllers
 {
@@ -33,10 +35,16 @@ namespace ZFood.Web.Controllers
 
         // GET restaurants/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Restaurant>> Get(string id)
+        public async Task<ActionResult<RestaurantDTO>> Get(string id)
         {
             var restaurant = await service.FindById(id);
-            return restaurant;
+
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            return restaurant.ToDTO();
         }
 
         // POST restaurants

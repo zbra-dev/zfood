@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using ZFood.Persistence.API.Entity;
 
 namespace ZFood.Persistence
@@ -22,9 +23,11 @@ namespace ZFood.Persistence
 
             modelBuilder.Entity<UserEntity>().HasData(
                 new UserEntity { Id = "1", Name = "John Doe" });
-            modelBuilder.Entity<RestaurantEntity>().HasData(
-                new RestaurantEntity { Id = "1", Name = "Example Restaurant 1", Address = "Rua das Flores, 27" },
-                new RestaurantEntity { Id = "2", Name = "Example Restaurant 2", Address = "Rua dos Pinheiros, 7777" });
+            var restaurants = Enumerable.Range(1, 50)
+                .Select(n => new RestaurantEntity { Id = n.ToString(), Name = $"Example Restaurant {n}", Address = "Rua das Flores, 27" })
+                .ToArray();
+            modelBuilder.Entity<RestaurantEntity>().HasData(restaurants);
+
             modelBuilder.Entity<VisitEntity>().HasData(
                 new VisitEntity { Id = "1", UserId = "1", RestaurantId = "1", Rate = 3 });
         }
