@@ -6,5 +6,7 @@ namespace ZFood.Core.API
     public interface IRestaurantService
     {
         Task<Restaurant> FindById(string id);
+
+        Task<Page<Restaurant>> Get(int take, int skip, string query);
     }
 }

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Model;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
 
@@ -27,10 +26,10 @@ namespace ZFood.Web.Controllers
         /// <param name="query">Query</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get(int? take, int? skip, string query)
+        public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, string query = null)
         {
-            // TODO: Throw error if take or skip are empty
-            return new string[] { "value1", "value2" };
+            var page = await service.Get(take, skip, query);
+            return page.ToDTO(r => r.ToDTO());
         }
 
         // GET restaurants/5
