@@ -13,6 +13,6 @@ namespace ZFood.Web.DTO
         public bool HasMore { get; set; }
 
         [DataMember]
-        public int TotalCount { get; set; }
+        public int? TotalCount { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace ZFood.Core.API
 
         public bool HasMore { get; set; }
 
-        public int TotalCount { get; set; }
+        public int? TotalCount { get; set; }
     }
 }

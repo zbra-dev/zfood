@@ -24,11 +24,12 @@ namespace ZFood.Web.Controllers
         /// <param name="take">Number of restaurants to take</param>
         /// <param name="skip">Number of restaurants to skip</param>
         /// <param name="query">Query</param>
+        /// <param name="count">Count restaurants</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, string query = null)
+        public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, bool count = false, string query = null)
         {
-            var page = await service.Get(take, skip, query);
+            var page = await service.Get(take, skip, count, query);
             return page.ToDTO(r => r.ToDTO());
         }
 

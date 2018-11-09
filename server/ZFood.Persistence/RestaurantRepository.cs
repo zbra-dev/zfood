@@ -30,5 +30,10 @@ namespace ZFood.Persistence
 
             return items.ToArrayAsync();
         }
+
+        public Task<int> GetTotalCount ()
+        {
+            return context.Restaurants.CountAsync();
+        }
     }
 }
