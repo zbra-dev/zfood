@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ZFood.Core.API
 {
@@ -9,6 +8,6 @@ namespace ZFood.Core.API
 
         public bool HasMore { get; set; }
 
-        public int ItemsQuantity { get; set; }
+        public int TotalCount { get; set; }
     }
 }

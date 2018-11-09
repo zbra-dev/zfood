@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace ZFood.Web.DTO
@@ -14,6 +13,6 @@ namespace ZFood.Web.DTO
         public bool HasMore { get; set; }
 
         [DataMember]
-        public int PagesQuantity { get; set; }
+        public int TotalCount { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace ZFood.Web.Extensions
             {
                 Items = page.Items.Select(i => conversionFunction(i)),
                 HasMore = page.HasMore,
-                PagesQuantity = page.ItemsQuantity
+                TotalCount = page.TotalCount
             };
         }
     }
