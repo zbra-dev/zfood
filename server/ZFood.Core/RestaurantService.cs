@@ -24,12 +24,10 @@ namespace ZFood.Core
 
         public async Task<Page<Restaurant>> Get(int take, int skip, string query)
         {
-            var increaseTake = take + 1;
-
-            var restaurants = (await repository.Get(increaseTake, skip, query))
-                .Select(r => r.ToModel());
-
-            var hasMore = restaurants.Count() == increaseTake;
+            var increasedTake = take + 1;
+            var entities = await repository.Get(increasedTake, skip, query);
+            var restaurants = entities.Select(r => r.ToModel()).ToArray();
+            var hasMore = restaurants.Length == increasedTake;
             
             return new Page<Restaurant>
             {
