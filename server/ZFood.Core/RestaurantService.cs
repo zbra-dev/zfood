@@ -43,5 +43,10 @@ namespace ZFood.Core
                 TotalCount = totalCount,
             };
         }
+
+        public async Task Delete(string id)
+        {
+            await repository.Delete(id);
+        }
     }
 }

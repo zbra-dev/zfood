@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Persistence.API;
@@ -31,9 +32,19 @@ namespace ZFood.Persistence
             return items.ToArrayAsync();
         }
 
-        public Task<int> GetTotalCount ()
+        public Task<int> GetTotalCount()
         {
             return context.Restaurants.CountAsync();
+        }
+
+        public async Task Delete(string id)
+        {
+            var restaurant = await context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
+            if (restaurant != null)
+            {
+                context.Restaurants.Remove(restaurant);
+                context.SaveChanges();
+            }
         }
     }
 }
