@@ -1,4 +1,5 @@
-﻿using ZFood.Model;
+﻿using ZFood.Core.API;
+using ZFood.Model;
 using ZFood.Persistence.API.Entity;
 
 namespace ZFood.Core.Extensions
@@ -20,6 +21,16 @@ namespace ZFood.Core.Extensions
             return new RestaurantEntity
             {
                 Id = restaurant.Id,
+                Name = restaurant.Name,
+                Address = restaurant.Address
+            };
+        }
+
+        public static RestaurantEntity ToEntity(this CreateRestaurantRequest restaurant)
+        {
+            return new RestaurantEntity
+            {
+                Id = null,
                 Name = restaurant.Name,
                 Address = restaurant.Address
             };

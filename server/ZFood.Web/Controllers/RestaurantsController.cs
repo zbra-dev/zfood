@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Web.DTO;
@@ -34,7 +36,7 @@ namespace ZFood.Web.Controllers
         }
 
         // GET restaurants/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetRestaurant")]
         public async Task<ActionResult<RestaurantDTO>> Get(string id)
         {
             var restaurant = await service.FindById(id);
@@ -49,8 +51,17 @@ namespace ZFood.Web.Controllers
 
         // POST restaurants
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] CreateRestaurantRequestDTO dto)
         {
+            try
+            {
+                var createdRestaurant = await service.CreateRestaurant(dto.FromDTO());
+                return CreatedAtRoute("GetRestaurant", new { id = createdRestaurant.Id }, createdRestaurant.ToDTO());
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // PUT restaurants/5

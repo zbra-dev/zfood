@@ -35,5 +35,12 @@ namespace ZFood.Persistence
         {
             return context.Restaurants.CountAsync();
         }
+
+        public async Task<RestaurantEntity> CreateRestaurant(RestaurantEntity restaurant)
+        {
+            var createdRestaurant = await context.Restaurants.AddAsync(restaurant);
+            context.SaveChanges();
+            return createdRestaurant.Entity;
+        }
     }
 }

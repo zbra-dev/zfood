@@ -1,4 +1,5 @@
-﻿using ZFood.Model;
+﻿using ZFood.Core.API;
+using ZFood.Model;
 using ZFood.Web.DTO;
 
 namespace ZFood.Web.Extensions
@@ -12,6 +13,15 @@ namespace ZFood.Web.Extensions
                 Id = restaurant.Id,
                 Name = restaurant.Name,
                 Address = restaurant.Address
+            };
+        }
+
+        public static CreateRestaurantRequest FromDTO(this CreateRestaurantRequestDTO requestDTO)
+        {
+            return new CreateRestaurantRequest
+            {
+                Name = requestDTO.Name,
+                Address = requestDTO.Address
             };
         }
     }

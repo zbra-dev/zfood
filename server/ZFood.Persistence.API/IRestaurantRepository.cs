@@ -11,5 +11,7 @@ namespace ZFood.Persistence.API
         Task<RestaurantEntity[]> Get(int take, int skip, string query);
 
         Task<int> GetTotalCount();
+
+        Task<RestaurantEntity> CreateRestaurant(RestaurantEntity restaurant);
     }
 }

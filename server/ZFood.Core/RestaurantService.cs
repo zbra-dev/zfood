@@ -43,5 +43,16 @@ namespace ZFood.Core
                 TotalCount = totalCount,
             };
         }
+
+        public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
+        {
+            if (restaurant == null)
+            {
+                throw new ArgumentNullException(nameof(restaurant));
+            }
+
+            var createdRestaurant = await repository.CreateRestaurant(restaurant.ToEntity());
+            return createdRestaurant.ToModel();
+        }
     }
 }
