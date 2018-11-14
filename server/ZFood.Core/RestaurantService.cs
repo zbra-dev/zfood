@@ -44,6 +44,11 @@ namespace ZFood.Core
             };
         }
 
+        public async Task Delete(string id)
+        {
+            await repository.Delete(id);
+        }
+
         public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
         {
             if (restaurant == null)

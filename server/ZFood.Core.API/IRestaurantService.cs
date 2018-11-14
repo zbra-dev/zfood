@@ -9,6 +9,8 @@ namespace ZFood.Core.API
 
         Task<Page<Restaurant>> Get(int take, int skip, bool count, string query);
 
+        Task Delete(string id);
+
         Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant);
     }
 }
