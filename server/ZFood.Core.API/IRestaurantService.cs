@@ -12,5 +12,7 @@ namespace ZFood.Core.API
         Task Delete(string id);
 
         Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant);
+
+        Task UpdateRestaurant(UpdateRestaurantRequest restaurant);
     }
 }

@@ -53,5 +53,13 @@ namespace ZFood.Persistence
             context.SaveChanges();
             return createdRestaurant.Entity;
         }
+
+        public async Task UpdateRestaurant(RestaurantEntity restaurant)
+        {
+            var restaurantToBeUpdated = await FindById(restaurant.Id);
+            restaurantToBeUpdated = restaurant;
+            context.Restaurants.Update(restaurantToBeUpdated);
+            context.SaveChanges();
+        }
     }
 }

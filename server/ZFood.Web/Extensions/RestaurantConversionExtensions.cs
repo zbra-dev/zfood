@@ -24,5 +24,15 @@ namespace ZFood.Web.Extensions
                 Address = requestDTO.Address
             };
         }
+
+        public static UpdateRestaurantRequest FromDTO(this UpdateRestaurantRequestDTO requestDTO, string id)
+        {
+            return new UpdateRestaurantRequest
+            {
+                Id = id,
+                Name = requestDTO.Name,
+                Address = requestDTO.Address
+            };
+        }
     }
 }

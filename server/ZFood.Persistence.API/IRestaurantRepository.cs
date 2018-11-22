@@ -15,5 +15,7 @@ namespace ZFood.Persistence.API
         Task Delete(string id);
 
         Task<RestaurantEntity> CreateRestaurant(RestaurantEntity restaurant);
+
+        Task UpdateRestaurant(RestaurantEntity restaurant);
     }
 }

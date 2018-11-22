@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Core.API;
+using ZFood.Core.API.Exceptions;
 using ZFood.Core.Extensions;
 using ZFood.Model;
 using ZFood.Persistence.API;
@@ -49,15 +50,33 @@ namespace ZFood.Core
             await repository.Delete(id);
         }
 
-        public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
+        public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurantRequest)
         {
-            if (restaurant == null)
+            if (restaurantRequest == null)
             {
-                throw new ArgumentNullException(nameof(restaurant));
+                throw new ArgumentNullException(nameof(restaurantRequest));
             }
 
-            var createdRestaurant = await repository.CreateRestaurant(restaurant.ToEntity());
+            var createdRestaurant = await repository.CreateRestaurant(restaurantRequest.ToEntity());
             return createdRestaurant.ToModel();
+        }
+
+        public async Task UpdateRestaurant(UpdateRestaurantRequest restaurantRequest)
+        {
+
+            if (restaurantRequest == null)
+            {
+                throw new ArgumentNullException(nameof(restaurantRequest));
+            }
+
+            var restaurant = await FindById(restaurantRequest.Id);
+
+            if (restaurant == null)
+            {
+                throw new EntityNotFoundException($"Could not find Restaurant {restaurantRequest.Id}");
+            }
+
+            await repository.UpdateRestaurant(restaurantRequest.ToEntity());
         }
     }
 }

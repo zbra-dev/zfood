@@ -35,5 +35,15 @@ namespace ZFood.Core.Extensions
                 Address = restaurant.Address
             };
         }
+
+        public static RestaurantEntity ToEntity(this UpdateRestaurantRequest restaurant)
+        {
+            return new RestaurantEntity
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Address = restaurant.Address
+            };
+        }
     }
 }

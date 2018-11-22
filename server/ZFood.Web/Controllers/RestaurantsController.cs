@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ZFood.Core.API;
+using ZFood.Core.API.Exceptions;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
 
@@ -66,8 +67,21 @@ namespace ZFood.Web.Controllers
 
         // PUT restaurants/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Put(string id, [FromBody] UpdateRestaurantRequestDTO dto)
         {
+            try
+            {
+                await service.UpdateRestaurant(dto.FromDTO(id));
+                return NoContent();
+            }
+            catch (EntityNotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE restaurants/5
