@@ -1,6 +1,6 @@
-﻿namespace ZFood.Persistence.API.Entity
+﻿namespace ZFood.Model
 {
-    public class UserEntity
+    class User
     {
         public string Id { get; set; }
 
