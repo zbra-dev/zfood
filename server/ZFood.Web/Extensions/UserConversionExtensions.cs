@@ -25,5 +25,16 @@ namespace ZFood.Web.Extensions
                 Username = requestDTO.Username
             };
         }
+
+        public static UpdateUserRequest FromDTO(this UpdateUserRequestDTO requestDTO, string id)
+        {
+            return new UpdateUserRequest
+            {
+                Id = id,
+                Name = requestDTO.Name,
+                Email = requestDTO.Email,
+                Username = requestDTO.Username
+            };
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace ZFood.Persistence.API
         Task<UserEntity> FindById(string id);
 
         Task<UserEntity> CreateUser(UserEntity user);
+
+        Task UpdateUser(UserEntity user);
     }
 }

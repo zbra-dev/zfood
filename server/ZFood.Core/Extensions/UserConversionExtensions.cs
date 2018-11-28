@@ -29,5 +29,15 @@ namespace ZFood.Core.Extensions
             };
         }
 
+        public static UserEntity ToEntity(this UpdateUserRequest user)
+        {
+            return new UserEntity
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Username = user.Username
+            };
+        }
     }
 }

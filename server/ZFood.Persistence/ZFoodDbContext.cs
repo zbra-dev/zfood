@@ -21,8 +21,11 @@ namespace ZFood.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserEntity>().HasData(
-                new UserEntity { Id = "1", Name = "John Doe" });
+            var users = Enumerable.Range(1, 50)
+                .Select(n => new UserEntity { Id = n.ToString(), Name = "John Doe", Email = "john@doe", Username = "johndoe"})
+                .ToArray();
+            modelBuilder.Entity<UserEntity>().HasData(users);
+
             var restaurants = Enumerable.Range(1, 50)
                 .Select(n => new RestaurantEntity { Id = n.ToString(), Name = $"Example Restaurant {n}", Address = "Rua das Flores, 27" })
                 .ToArray();

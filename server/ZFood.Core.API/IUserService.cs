@@ -6,5 +6,7 @@ namespace ZFood.Core.API
     public interface IUserService
     {
         Task<User> CreateUser(CreateUserRequest userRequest);
+
+        Task UpdateUser(UpdateUserRequest user);
     }
 }

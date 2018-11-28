@@ -25,5 +25,13 @@ namespace ZFood.Persistence
             context.SaveChanges();
             return createdUser.Entity;
         }
+
+        public async Task UpdateUser(UserEntity user)
+        {
+            var userToBeUpdated = await FindById(user.Id);
+            userToBeUpdated = user;
+            context.Users.Update(userToBeUpdated);
+            context.SaveChanges();
+        }
     }
 }
