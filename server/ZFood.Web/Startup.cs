@@ -54,9 +54,11 @@ namespace ZFood.Web
 
             // Persistence
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             // API
             services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

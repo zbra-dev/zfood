@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ZFood.Model;
+using System.Threading.Tasks;
 
 namespace ZFood.Core.API
 {
-    interface IUserService
+    public interface IUserService
     {
+        Task<User> CreateUser(CreateUserRequest userRequest);
     }
 }
