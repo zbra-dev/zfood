@@ -18,6 +18,26 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
+        // GET user/5
+        [HttpGet("{id}", Name = "GetUser")]
+        public async Task<ActionResult<UserDTO>> Get(string id)
+        {
+            var user = await service.FindById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user.ToDTO();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count, string query)
+        {
+            var page = await service.Get(skip, take, count, query);
+            return page.ToDTO(u => u.ToDTO());
+        }
+
         // POST user
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateUserRequestDTO dto)
@@ -25,8 +45,7 @@ namespace ZFood.Web.Controllers
             try
             {
                 var createdUser = await service.CreateUser(dto.FromDTO());
-                // return CreatedAtRoute("GetUser", new { id = createdUser.Id }, createdUser.ToDTO());
-                return Ok();
+                return CreatedAtRoute("GetUser", new { id = createdUser.Id }, createdUser.ToDTO());
             }
             catch
             {
@@ -51,6 +70,13 @@ namespace ZFood.Web.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        // DELETE user/5
+        [HttpDelete("{id}")]
+        public async Task Delete(string id)
+        {
+            await service.DeleteUser(id);
         }
     }
 }

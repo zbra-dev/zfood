@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Core.API.Exceptions;
@@ -23,11 +24,32 @@ namespace ZFood.Core
             return entity?.ToModel();
         }
 
+        public async Task<Page<User>> Get(int skip, int take, bool count, string query)
+        {
+            var increasedTake = take++;
+            var userEntities = await repository.Get(skip, increasedTake, query);
+            var users = userEntities.Select(u => u.ToModel()).ToArray();
+            var hasMore = users.Length == increasedTake;
+            int? totalCount = null;
+
+            if (count)
+            {
+                totalCount = await repository.GetTotalCount();
+            }
+
+            return new Page<User>
+            {
+                Items = users,
+                HasMore = hasMore,
+                TotalCount = totalCount
+            };
+        }
+
         public async Task<User> CreateUser(CreateUserRequest userRequest)
         {
             if (userRequest == null)
             {
-                throw new System.ArgumentNullException(nameof(userRequest));
+                throw new ArgumentNullException(nameof(userRequest));
             }
 
             var createdUser = await repository.CreateUser(userRequest.ToEntity());
@@ -49,6 +71,11 @@ namespace ZFood.Core
             }
 
             await repository.UpdateUser(userRequest.ToEntity());
+        }
+
+        public async Task DeleteUser(string id)
+        {
+            await repository.DeleteUser(id);
         }
     }
 }

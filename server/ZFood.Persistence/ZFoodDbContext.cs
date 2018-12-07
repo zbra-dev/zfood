@@ -22,7 +22,7 @@ namespace ZFood.Persistence
             base.OnModelCreating(modelBuilder);
 
             var users = Enumerable.Range(1, 50)
-                .Select(n => new UserEntity { Id = n.ToString(), Name = "John Doe", Email = "john@doe", Username = "johndoe"})
+                .Select(n => new UserEntity { Id = n.ToString(), Name = $"John Doe {n}", Email = $"john{n}@doe", Username = $"johndoe.{n}"})
                 .ToArray();
             modelBuilder.Entity<UserEntity>().HasData(users);
 

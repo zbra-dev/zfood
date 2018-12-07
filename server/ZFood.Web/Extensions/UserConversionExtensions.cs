@@ -12,6 +12,7 @@ namespace ZFood.Web.Extensions
             {
                 Id = user.Id,
                 Name = user.Name,
+                Email = user.Email,
                 Username = user.Username
             };
         }
