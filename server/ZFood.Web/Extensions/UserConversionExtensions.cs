@@ -10,10 +10,8 @@ namespace ZFood.Web.Extensions
         {
             return new UserDTO
             {
-                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                Username = user.Username
             };
         }
 

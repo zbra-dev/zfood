@@ -5,16 +5,16 @@ namespace ZFood.Web.DTO
     [DataContract(Name = "Visit")]
     public class VisitDTO
     {
+        [DataMember]
         public string Id { get; set; }
 
+        [DataMember]
         public int Rate { get; set; }
 
-        public string RestaurantId { get; set; }
-
+        [DataMember]
         public RestaurantDTO Restaurant { get; set; }
 
-        public string UserId { get; set; }
-
+        [DataMember]
         public UserDTO User { get; set; }
     }
 }

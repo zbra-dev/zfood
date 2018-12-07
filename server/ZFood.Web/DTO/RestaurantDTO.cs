@@ -6,9 +6,6 @@ namespace ZFood.Web.DTO
     public class RestaurantDTO
     {
         [DataMember]
-        public string Id { get; set; }
-
-        [DataMember]
         public string Name { get; set; }
 
         [DataMember]

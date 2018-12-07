@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZFood.Model
+﻿namespace ZFood.Model
 {
-    class Visit
+    public class Visit
     {
+        public string Id { get; set; }
+
+        public int Rate { get; set; }
+
+        public string RestaurantId { get; set; }
+
+        public Restaurant Restaurant { get; set; }
+
+        public string UserId { get; set; }
+
+        public User User { get; set; }
     }
 }

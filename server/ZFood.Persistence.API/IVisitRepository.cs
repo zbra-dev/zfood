@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+using ZFood.Persistence.API.Entity;
 
 namespace ZFood.Persistence.API
 {
-    interface IVisitRepository
+    public interface IVisitRepository
     {
+        Task<VisitEntity[]> Get(int skip, int take, string query);
+
+        Task<int> GetTotalCount();
     }
 }

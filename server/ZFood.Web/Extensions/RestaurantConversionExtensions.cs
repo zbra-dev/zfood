@@ -10,7 +10,6 @@ namespace ZFood.Web.Extensions
         {
             return new RestaurantDTO
             {
-                Id = restaurant.Id,
                 Name = restaurant.Name,
                 Address = restaurant.Address
             };

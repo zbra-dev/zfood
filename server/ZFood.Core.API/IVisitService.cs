@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+using ZFood.Model;
 
 namespace ZFood.Core.API
 {
-    class IVisitService
+    public interface IVisitService
     {
+        Task<Page<Visit>> Get(int skip, int take, bool count, string query);
     }
 }

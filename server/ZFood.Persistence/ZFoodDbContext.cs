@@ -31,8 +31,10 @@ namespace ZFood.Persistence
                 .ToArray();
             modelBuilder.Entity<RestaurantEntity>().HasData(restaurants);
 
-            modelBuilder.Entity<VisitEntity>().HasData(
-                new VisitEntity { Id = "1", UserId = "1", RestaurantId = "1", Rate = 3 });
+            var visits = Enumerable.Range(1, 50)
+                .Select(n => new VisitEntity { Id = n.ToString(), UserId = "1", RestaurantId = "1", Rate = 3 })
+                .ToArray();
+            modelBuilder.Entity<VisitEntity>().HasData(visits);
         }
     }
 }
