@@ -1,4 +1,5 @@
-﻿using ZFood.Model;
+﻿using ZFood.Core.API;
+using ZFood.Model;
 using ZFood.Persistence.API.Entity;
 
 namespace ZFood.Core.Extensions
@@ -15,6 +16,19 @@ namespace ZFood.Core.Extensions
                 Restaurant = entity.Restaurant.ToModel(),
                 UserId = entity.UserId,
                 User = entity.User.ToModel()
+            };
+        }
+
+        public static VisitEntity ToEntity(this CreateVisitRequest visitRequest)
+        {
+            return new VisitEntity
+            {
+                Id = null,
+                Rate = visitRequest.Rate,
+                RestaurantId = visitRequest.RestaurantId,
+                Restaurant = null,
+                UserId = visitRequest.UserId,
+                User = null,
             };
         }
     }

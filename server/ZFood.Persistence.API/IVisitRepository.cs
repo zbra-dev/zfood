@@ -8,5 +8,7 @@ namespace ZFood.Persistence.API
         Task<VisitEntity[]> Get(int skip, int take, string query);
 
         Task<int> GetTotalCount();
+
+        Task<VisitEntity> CreateVisit(VisitEntity visit);
     }
 }
