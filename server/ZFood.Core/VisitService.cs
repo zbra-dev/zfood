@@ -24,6 +24,12 @@ namespace ZFood.Core
             this.userRepository = userRepository;
         }
 
+        public async Task<Visit> FindById(string id)
+        {
+            var visitEntity = await visitRepository.FindById(id);
+            return visitEntity?.ToModel();
+        }
+
         public async Task<Page<Visit>> Get(int skip, int take, bool count, string query)
         {
             var increasedTake = take++;

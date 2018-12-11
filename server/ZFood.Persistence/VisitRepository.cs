@@ -15,6 +15,14 @@ namespace ZFood.Persistence
             this.context = context;
         }
 
+        public async Task<VisitEntity> FindById(string id)
+        {
+            return await context.Visits
+                .Include(v => v.Restaurant)
+                .Include(v => v.User)
+                .FirstOrDefaultAsync(v => v.Id == id);
+        }
+
         public Task<VisitEntity[]> Get(int skip, int take, string query)
         {
             var items = context.Visits.Skip(skip).Take(take);

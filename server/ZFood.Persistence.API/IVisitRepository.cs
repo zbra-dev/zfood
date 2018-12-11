@@ -5,6 +5,8 @@ namespace ZFood.Persistence.API
 {
     public interface IVisitRepository
     {
+        Task<VisitEntity> FindById(string id);
+
         Task<VisitEntity[]> Get(int skip, int take, string query);
 
         Task<int> GetTotalCount();

@@ -18,6 +18,20 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
+        // GET /Visit/5
+        [HttpGet("{id}", Name = "GetVisit")]
+        public async Task<ActionResult<VisitDTO>> Get(string id)
+        {
+            var visit = await service.FindById(id);
+
+            if (visit == null)
+            {
+                return NotFound();
+            }
+
+            return visit.ToDTO();
+        }
+
         [HttpGet]
         public async Task<ActionResult<PageDTO<VisitDTO>>> Get(int skip, int take, bool count, string query)
         {
@@ -32,8 +46,7 @@ namespace ZFood.Web.Controllers
             try
             {
                 var createdVisit = await service.CreateVisit(dto.FromDTO());
-                // TODO: return the created Visit here with the code 201
-                return Ok();
+                return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
             }
             catch (EntityNotFoundException exception)
             {
