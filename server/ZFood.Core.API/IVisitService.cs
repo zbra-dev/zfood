@@ -10,5 +10,7 @@ namespace ZFood.Core.API
         Task<Page<Visit>> Get(int skip, int take, bool count, string query);
 
         Task<Visit> CreateVisit(CreateVisitRequest visitRequest);
+
+        Task DeleteVisit(string id);
     }
 }

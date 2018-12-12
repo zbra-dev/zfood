@@ -74,5 +74,10 @@ namespace ZFood.Core
             var createdVisit = await visitRepository.CreateVisit(visitEntity);
             return createdVisit.ToModel();
         }
+
+        public async Task DeleteVisit(string id)
+        {
+            await visitRepository.DeleteVisit(id);
+        }
     }
 }
