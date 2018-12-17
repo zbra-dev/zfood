@@ -13,6 +13,8 @@ namespace ZFood.Persistence.API
 
         Task<VisitEntity> CreateVisit(VisitEntity visit);
 
+        Task UpdateVisit(VisitEntity visit);
+
         Task DeleteVisit(string id);
     }
 }

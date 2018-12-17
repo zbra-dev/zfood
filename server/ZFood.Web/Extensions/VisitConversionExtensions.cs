@@ -26,5 +26,16 @@ namespace ZFood.Web.Extensions
                 UserId = dto.UserId
             };
         }
+
+        public static UpdateVisitRequest FromDTO(this UpdateVisitRequestDTO requestDTO, string id)
+        {
+            return new UpdateVisitRequest
+            {
+                Id = id,
+                Rate = requestDTO.Rate.Value,
+                RestaurantId = requestDTO.RestaurantId,
+                UserId = requestDTO.UserId
+            };
+        }
     }
 }

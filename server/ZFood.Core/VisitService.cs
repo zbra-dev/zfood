@@ -75,6 +75,34 @@ namespace ZFood.Core
             return createdVisit.ToModel();
         }
 
+        public async Task UpdateVisit(UpdateVisitRequest visitRequest)
+        {
+            if (visitRequest == null)
+            {
+                throw new ArgumentNullException(nameof(visitRequest));
+            }
+
+            var visit = await FindById(visitRequest.Id);
+            if (visit == null)
+            {
+                throw new EntityNotFoundException($"Could not find Visit {visitRequest.Id}");
+            }
+
+            var restaurant = await restaurantRepository.FindById(visitRequest.RestaurantId);
+            if (restaurant == null)
+            {
+                throw new EntityNotFoundException($"Could not find Restaurant {visitRequest.RestaurantId}");
+            }
+
+            var user = await userRepository.FindById(visitRequest.UserId);
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"Could not find User {visitRequest.UserId}");
+            }
+
+            await visitRepository.UpdateVisit(visitRequest.ToEntity());
+        }
+
         public async Task DeleteVisit(string id)
         {
             await visitRepository.DeleteVisit(id);

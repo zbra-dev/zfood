@@ -54,6 +54,30 @@ namespace ZFood.Web.Controllers
             }
         }
 
+        // PUT visit/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, [FromBody] UpdateVisitRequestDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                await service.UpdateVisit(dto.FromDTO(id));
+                return NoContent();
+            }
+            catch (EntityNotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         // DELETE visit/5
         [HttpDelete("{id}")]
         public async Task Delete(string id)

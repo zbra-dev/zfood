@@ -49,6 +49,14 @@ namespace ZFood.Persistence
                 .FirstOrDefaultAsync(v => v.Id == createdVisit.Entity.Id);
         }
 
+        public async Task UpdateVisit(VisitEntity visit)
+        {
+            var visitToBeUpdated = await FindById(visit.Id);
+            visitToBeUpdated = visit;
+            context.Visits.Update(visitToBeUpdated);
+            context.SaveChanges();
+        }
+
         public async Task DeleteVisit(string id)
         {
             // TODO: Avoid hitting database twice

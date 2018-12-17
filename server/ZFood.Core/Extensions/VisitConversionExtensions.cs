@@ -31,5 +31,18 @@ namespace ZFood.Core.Extensions
                 User = null,
             };
         }
+
+        public static VisitEntity ToEntity(this UpdateVisitRequest visitRequest)
+        {
+            return new VisitEntity
+            {
+                Id = visitRequest.Id,
+                Rate = visitRequest.Rate,
+                RestaurantId = visitRequest.RestaurantId,
+                Restaurant = null,
+                UserId = visitRequest.UserId,
+                User = null,
+            };
+        }
     }
 }

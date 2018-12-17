@@ -11,6 +11,8 @@ namespace ZFood.Core.API
 
         Task<Visit> CreateVisit(CreateVisitRequest visitRequest);
 
+        Task UpdateVisit(UpdateVisitRequest visitRequest);
+
         Task DeleteVisit(string id);
     }
 }
