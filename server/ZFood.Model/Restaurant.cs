@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ZFood.Model
+﻿namespace ZFood.Model
 {
     public class Restaurant
     {
