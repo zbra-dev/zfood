@@ -8,7 +8,7 @@ using ZFood.Web.Extensions;
 namespace ZFood.Web.Controllers
 {
     [Route("[controller]")]
-    [ApiController]
+    [Controller]
     public class VisitsController : ControllerBase
     {
         private readonly IVisitService service;
@@ -43,15 +43,8 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-            try
-            {
                 var createdVisit = await service.CreateVisit(dto.FromDTO());
                 return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
-            }
-            catch (EntityNotFoundException exception)
-            {
-                return BadRequest(exception.Message);
-            }
         }
 
         // PUT visit/5
@@ -60,11 +53,6 @@ namespace ZFood.Web.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
-
                 await service.UpdateVisit(dto.FromDTO(id));
                 return NoContent();
             }

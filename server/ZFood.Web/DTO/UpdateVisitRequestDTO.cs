@@ -4,7 +4,7 @@ namespace ZFood.Web.DTO
 {
     public class UpdateVisitRequestDTO
     {
-        [Required]
+        [Required, Range(1, 5)]
         public int? Rate { get; set; }
 
         [Required]

@@ -15,6 +15,7 @@ using ZFood.Core.Decorator;
 using ZFood.Core.Validators;
 using ZFood.Persistence;
 using ZFood.Persistence.API;
+using ZFood.Web.Filter;
 
 namespace ZFood.Web
 {
@@ -75,6 +76,12 @@ namespace ZFood.Web
             });
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IVisitService, VisitService>();
+
+            // Filter
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new ValidateModelFilter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
