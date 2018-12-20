@@ -12,6 +12,7 @@ using ZFood.Core;
 using ZFood.Core.API;
 using ZFood.Persistence;
 using ZFood.Persistence.API;
+using ZFood.Web.Filter;
 
 namespace ZFood.Web
 {
@@ -61,6 +62,12 @@ namespace ZFood.Web
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IVisitService, VisitService>();
+
+            // Filter
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new ValidateModelFilter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

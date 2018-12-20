@@ -7,7 +7,7 @@ namespace ZFood.Web.DTO
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        [Required, EmailAddress]
         public string Email { get; set; }
 
         [Required]
