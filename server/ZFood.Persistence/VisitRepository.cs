@@ -43,10 +43,7 @@ namespace ZFood.Persistence
         {
             var createdVisit = await context.Visits.AddAsync(visit);
             await context.SaveChangesAsync();
-            return await context.Visits
-                .Include(v => v.Restaurant)
-                .Include(v => v.User)
-                .FirstOrDefaultAsync(v => v.Id == createdVisit.Entity.Id);
+            return await FindById(createdVisit.Entity.Id);
         }
 
         public async Task UpdateVisit(VisitEntity visit)
