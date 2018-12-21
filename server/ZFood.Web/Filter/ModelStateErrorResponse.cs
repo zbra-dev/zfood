@@ -6,13 +6,13 @@ namespace ZFood.Web.Filter
 {
     public class ModelStateErrorResponse
     {
-        private const string errorMessage = "The request is invalid.";
+        private const string ErrorMessage = "The request is invalid.";
 
         public string Message { get; private set; }
 
         public ModelStateErrorResponse(ActionExecutingContext context)
         {
-            var messageBuilder = new StringBuilder(errorMessage);
+            var messageBuilder = new StringBuilder(ErrorMessage);
             foreach (var item in context.ModelState)
             {
                 foreach (var error in item.Value.Errors)
