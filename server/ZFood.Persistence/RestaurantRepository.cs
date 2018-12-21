@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Persistence.API;
@@ -44,23 +43,22 @@ namespace ZFood.Persistence
             if (restaurant != null)
             {
                 context.Restaurants.Remove(restaurant);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
         public async Task<RestaurantEntity> CreateRestaurant(RestaurantEntity restaurant)
         {
             var createdRestaurant = await context.Restaurants.AddAsync(restaurant);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return createdRestaurant.Entity;
         }
 
         public async Task UpdateRestaurant(RestaurantEntity restaurant)
         {
-            var restaurantToBeUpdated = await FindById(restaurant.Id);
-            restaurantToBeUpdated = restaurant;
-            context.Restaurants.Update(restaurantToBeUpdated);
-            context.SaveChanges();
+            var entry = context.Entry(restaurant);
+            entry.State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
     }
 }

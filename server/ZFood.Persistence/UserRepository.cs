@@ -23,7 +23,7 @@ namespace ZFood.Persistence
         public Task<UserEntity[]> Get(int skip, int take, string query)
         {
             var users = context.Users.Skip(skip).Take(take);
-            if(!string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
             {
                 users = users.Where(u => u.Name.StartsWith(query));
             }
@@ -33,7 +33,7 @@ namespace ZFood.Persistence
         public async Task<UserEntity> CreateUser(UserEntity user)
         {
             var createdUser = await context.Users.AddAsync(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return createdUser.Entity;
         }
 
@@ -44,10 +44,9 @@ namespace ZFood.Persistence
 
         public async Task UpdateUser(UserEntity user)
         {
-            var userToBeUpdated = await FindById(user.Id);
-            userToBeUpdated = user;
-            context.Users.Update(userToBeUpdated);
-            context.SaveChanges();
+            var entry = context.Entry(user);
+            entry.State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteUser(string id)
@@ -57,7 +56,7 @@ namespace ZFood.Persistence
             if (user != null)
             {
                 context.Users.Remove(user);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

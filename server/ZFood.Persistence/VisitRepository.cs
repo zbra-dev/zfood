@@ -10,7 +10,7 @@ namespace ZFood.Persistence
     {
         private readonly ZFoodDbContext context;
 
-        public VisitRepository (ZFoodDbContext context)
+        public VisitRepository(ZFoodDbContext context)
         {
             this.context = context;
         }
@@ -42,7 +42,7 @@ namespace ZFood.Persistence
         public async Task<VisitEntity> CreateVisit(VisitEntity visit)
         {
             var createdVisit = await context.Visits.AddAsync(visit);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return await context.Visits
                 .Include(v => v.Restaurant)
                 .Include(v => v.User)
@@ -51,10 +51,9 @@ namespace ZFood.Persistence
 
         public async Task UpdateVisit(VisitEntity visit)
         {
-            var visitToBeUpdated = await FindById(visit.Id);
-            visitToBeUpdated = visit;
-            context.Visits.Update(visitToBeUpdated);
-            context.SaveChanges();
+            var entry = context.Entry(visit);
+            entry.State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteVisit(string id)
@@ -64,7 +63,7 @@ namespace ZFood.Persistence
             if (visit != null)
             {
                 context.Visits.Remove(visit);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }
