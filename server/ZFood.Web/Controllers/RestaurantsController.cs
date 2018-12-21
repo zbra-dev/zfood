@@ -83,9 +83,10 @@ namespace ZFood.Web.Controllers
 
         // DELETE restaurants/5
         [HttpDelete("{id}")]
-        public async Task Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             await service.Delete(id);
+            return NoContent();
         }
     }
 }

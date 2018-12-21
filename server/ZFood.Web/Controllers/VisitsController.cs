@@ -43,8 +43,8 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-                var createdVisit = await service.CreateVisit(dto.FromDTO());
-                return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
+            var createdVisit = await service.CreateVisit(dto.FromDTO());
+            return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
         }
 
         // PUT visit/5
@@ -68,9 +68,10 @@ namespace ZFood.Web.Controllers
 
         // DELETE visit/5
         [HttpDelete("{id}")]
-        public async Task Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             await service.DeleteVisit(id);
+            return NoContent();
         }
     }
 }

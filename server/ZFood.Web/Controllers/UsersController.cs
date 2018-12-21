@@ -74,9 +74,10 @@ namespace ZFood.Web.Controllers
 
         // DELETE user/5
         [HttpDelete("{id}")]
-        public async Task Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             await service.DeleteUser(id);
+            return NoContent();
         }
     }
 }
