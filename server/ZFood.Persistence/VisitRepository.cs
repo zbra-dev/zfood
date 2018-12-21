@@ -55,12 +55,15 @@ namespace ZFood.Persistence
 
         public async Task DeleteVisit(string id)
         {
-            // TODO: Avoid hitting database twice
-            var visit = await FindById(id);
-            if (visit != null)
+            var entry = context.Entry(new VisitEntity() { Id = id });
+            entry.State = EntityState.Deleted;
+            try
             {
-                context.Visits.Remove(visit);
                 await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // TODO: Log error
             }
         }
     }

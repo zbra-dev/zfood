@@ -38,12 +38,15 @@ namespace ZFood.Persistence
 
         public async Task Delete(string id)
         {
-            // TODO: Avoid hitting database twice
-            var restaurant = await context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
-            if (restaurant != null)
+            var entry = context.Entry(new RestaurantEntity() { Id = id });
+            entry.State = EntityState.Deleted;
+            try
             {
-                context.Restaurants.Remove(restaurant);
                 await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // TODO: Log error
             }
         }
 

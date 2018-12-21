@@ -51,12 +51,15 @@ namespace ZFood.Persistence
 
         public async Task DeleteUser(string id)
         {
-            // TODO: Avoid hitting database twice
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            if (user != null)
+            var entry = context.Entry(new UserEntity() { Id = id });
+            entry.State = EntityState.Deleted;
+            try
             {
-                context.Users.Remove(user);
                 await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // TODO: Log error
             }
         }
     }
