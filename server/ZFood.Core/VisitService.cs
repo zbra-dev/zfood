@@ -53,23 +53,6 @@ namespace ZFood.Core
 
         public async Task<Visit> CreateVisit(CreateVisitRequest visitRequest)
         {
-            if (visitRequest == null)
-            {
-                throw new ArgumentNullException(nameof(visitRequest));
-            }
-
-            var restaurant = await restaurantRepository.FindById(visitRequest.RestaurantId);
-            if (restaurant == null)
-            {
-                throw new EntityNotFoundException($"Could not find Restaurant {visitRequest.RestaurantId}");
-            }
-
-            var user = await userRepository.FindById(visitRequest.UserId);
-            if (user == null)
-            {
-                throw new EntityNotFoundException($"Could not find User {visitRequest.UserId}");
-            }
-
             var visitEntity = visitRequest.ToEntity();
             var createdVisit = await visitRepository.CreateVisit(visitEntity);
             return createdVisit.ToModel();

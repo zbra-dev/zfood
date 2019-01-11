@@ -43,8 +43,19 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-            var createdVisit = await service.CreateVisit(dto.FromDTO());
-            return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
+            try
+            {
+                var createdVisit = await service.CreateVisit(dto.FromDTO());
+                return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
+            }
+            catch (EntityNotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // PUT visit/5
