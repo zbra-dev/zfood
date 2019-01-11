@@ -67,6 +67,7 @@ namespace ZFood.Web
             // Factory
             services.AddTransient<IRestaurantValidatorFactory, RestaurantValidatorFactory>();
             services.AddTransient<IVisitValidatorFactory, VisitValidatorFactory>();
+            services.AddTransient<IUserValidatorFactory, UserValidatorFactory>();
 
             // API
             services.AddTransient<IRestaurantService>(provider =>
@@ -84,7 +85,13 @@ namespace ZFood.Web
                 var service = new VisitService(visitRepository, restaurantRepository, userRepository);
                 return new VisitValidatorDecorator(service, factory);
             });
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService>(provider =>
+            {
+                var userRepository = provider.GetService<IUserRepository>();
+                var factory = provider.GetService<IUserValidatorFactory>();
+                var service = new UserService(userRepository);
+                return new UserValidatorDecorator(service, factory);
+            });
 
             // Filter
             services.AddMvc(config =>
