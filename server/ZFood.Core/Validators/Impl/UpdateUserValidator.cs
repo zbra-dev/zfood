@@ -33,6 +33,11 @@ namespace ZFood.Core.Validators.Impl
                 return validationResult;
             }
 
+            var username = await repository.FindByUsername(request.Username);
+            if (username != null)
+            {
+                validationResult.Exception = new EntityAlreadyExistsException($"Username {request.Username} already exists");
+            }
             return validationResult;
         }
     }

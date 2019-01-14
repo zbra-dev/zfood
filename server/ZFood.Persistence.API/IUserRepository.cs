@@ -7,6 +7,10 @@ namespace ZFood.Persistence.API
     {
         Task<UserEntity> FindById(string id);
 
+        Task<UserEntity> FindByUsername(string username);
+
+        Task<UserEntity> FindByEmail(string email);
+
         Task<UserEntity[]> Get(int skip, int take, string query);
 
         Task<int> GetTotalCount();

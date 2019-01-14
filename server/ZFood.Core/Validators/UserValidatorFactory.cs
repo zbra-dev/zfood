@@ -15,7 +15,7 @@ namespace ZFood.Core.Validators
 
         public IValidator<CreateUserRequest> CreateUserCreationValidator()
         {
-            return new CreateUserValidator();
+            return new CreateUserValidator(repository);
         }
 
         public IValidator<UpdateUserRequest> CreateUpdateUserValidator()

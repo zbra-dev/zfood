@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Core.Contexts;
 using ZFood.Core.Extensions;
 using ZFood.Model;
 using ZFood.Persistence.API;
@@ -11,30 +9,30 @@ namespace ZFood.Core
 {
     public class RestaurantService : IRestaurantService
     {
-        private readonly IRestaurantServiceContext context;
+        private readonly IRestaurantRepository repository;
 
-        public RestaurantService(IRestaurantServiceContext context)
+        public RestaurantService(IRestaurantRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         public async Task<Restaurant> FindById(string id)
         {
-            var entity = await context.RestaurantRepository.FindById(id);
+            var entity = await repository.FindById(id);
             return entity?.ToModel();
         }
 
         public async Task<Page<Restaurant>> Get(int take, int skip, bool count, string query)
         {
             var increasedTake = take + 1;
-            var entities = await context.RestaurantRepository.Get(increasedTake, skip, query);
+            var entities = await repository.Get(increasedTake, skip, query);
             var restaurants = entities.Select(r => r.ToModel()).ToArray();
             var hasMore = restaurants.Length == increasedTake;
             int? totalCount = null;
 
             if (count)
             {
-                totalCount = await context.RestaurantRepository.GetTotalCount();
+                totalCount = await repository.GetTotalCount();
             }
             
             return new Page<Restaurant>
@@ -47,18 +45,18 @@ namespace ZFood.Core
 
         public async Task Delete(string id)
         {
-            await context.RestaurantRepository.Delete(id);
+            await repository.Delete(id);
         }
 
         public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurantRequest)
         {
-            var createdRestaurant = await context.RestaurantRepository.CreateRestaurant(restaurantRequest.ToEntity());
+            var createdRestaurant = await repository.CreateRestaurant(restaurantRequest.ToEntity());
             return createdRestaurant.ToModel();
         }
 
         public async Task UpdateRestaurant(UpdateRestaurantRequest restaurantRequest)
         {
-            await context.RestaurantRepository.UpdateRestaurant(restaurantRequest.ToEntity());
+            await repository.UpdateRestaurant(restaurantRequest.ToEntity());
         }
     }
 }

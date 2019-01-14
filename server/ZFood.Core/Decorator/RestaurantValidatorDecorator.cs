@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Core.Contexts;
 using ZFood.Core.Utils;
+using ZFood.Core.Validators;
 using ZFood.Model;
 
 namespace ZFood.Core.Decorator
@@ -9,20 +9,17 @@ namespace ZFood.Core.Decorator
     public class RestaurantValidatorDecorator : IRestaurantService
     {
         private readonly IRestaurantService restaurantService;
-        private readonly IRestaurantServiceContext context;
+        private readonly IRestaurantValidatorFactory restaurantValidatorFactory;
 
-        public RestaurantValidatorDecorator(IRestaurantService restaurantService, IRestaurantServiceContext context)
+        public RestaurantValidatorDecorator(IRestaurantService restaurantService, IRestaurantValidatorFactory restaurantValidatorFactory)
         {
             this.restaurantService = restaurantService;
-            this.context = context;
+            this.restaurantValidatorFactory = restaurantValidatorFactory;
         }
 
         public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
         {
-            await context.RestaurantValidatorFactory
-                         .CreateRestaurantCreationValidator()
-                         .ThrowIfNotValid(restaurant);         
-
+            await restaurantValidatorFactory.CreateRestaurantCreationValidator().ThrowIfNotValid(restaurant);         
             return await restaurantService.CreateRestaurant(restaurant);
         }
 
@@ -44,10 +41,7 @@ namespace ZFood.Core.Decorator
 
         public async Task UpdateRestaurant(UpdateRestaurantRequest restaurantRequest)
         {
-            await context.RestaurantValidatorFactory
-                         .CreateUpdateRestaurantValidator()
-                         .ThrowIfNotValid(restaurantRequest);
-
+            await restaurantValidatorFactory.CreateUpdateRestaurantValidator().ThrowIfNotValid(restaurantRequest);
             await restaurantService.UpdateRestaurant(restaurantRequest);
         }
     }

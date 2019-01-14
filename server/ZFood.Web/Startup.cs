@@ -10,7 +10,6 @@ using System.IO;
 using System.Reflection;
 using ZFood.Core;
 using ZFood.Core.API;
-using ZFood.Core.Contexts;
 using ZFood.Core.Decorator;
 using ZFood.Core.Validators;
 using ZFood.Persistence;
@@ -61,9 +60,6 @@ namespace ZFood.Web
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IVisitRepository, VisitRepository>();
 
-            // Context
-            services.AddTransient<IRestaurantServiceContext, RestaurantServiceContext>();
-
             // Factory
             services.AddTransient<IRestaurantValidatorFactory, RestaurantValidatorFactory>();
             services.AddTransient<IVisitValidatorFactory, VisitValidatorFactory>();
@@ -72,9 +68,10 @@ namespace ZFood.Web
             // API
             services.AddTransient<IRestaurantService>(provider =>
             {
-                var context = provider.GetService<IRestaurantServiceContext>();
-                var service = new RestaurantService(context);
-                return new RestaurantValidatorDecorator(service, context);
+                var restaurantRepository = provider.GetService<IRestaurantRepository>();
+                var factory = provider.GetService<IRestaurantValidatorFactory>();
+                var service = new RestaurantService(restaurantRepository);
+                return new RestaurantValidatorDecorator(service, factory);
             });
             services.AddTransient<IVisitService>(provider =>
             {
