@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Core.API.Exceptions;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
 
@@ -43,38 +42,16 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-            try
-            {
-                var createdVisit = await service.CreateVisit(dto.FromDTO());
-                return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
-            }
-            catch (EntityNotFoundException exception)
-            {
-                return NotFound(exception.Message);
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            var createdVisit = await service.CreateVisit(dto.FromDTO());
+            return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
         }
 
         // PUT visit/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateVisitRequestDTO dto)
         {
-            try
-            {
-                await service.UpdateVisit(dto.FromDTO(id));
-                return NoContent();
-            }
-            catch (EntityNotFoundException exception)
-            {
-                return NotFound(exception.Message);
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            await service.UpdateVisit(dto.FromDTO(id));
+            return NoContent();
         }
 
         // DELETE visit/5
