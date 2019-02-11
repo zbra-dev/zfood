@@ -1,3 +1,4 @@
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZFood.Core.API;
@@ -8,9 +9,11 @@ using ZFood.Web.Extensions;
 namespace ZFood.Web.Controllers
 {
     [Route("[controller]")]
-    [ApiController]
+    [Controller]
     public class RestaurantsController : ControllerBase
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RestaurantsController));
+
         private readonly IRestaurantService service;
 
         public RestaurantsController(IRestaurantService service)
@@ -29,6 +32,7 @@ namespace ZFood.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, bool count = false, string query = null)
         {
+            log.Debug("Searching for some restaurants");
             var page = await service.Get(take, skip, count, query);
             return page.ToDTO(r => r.ToDTO());
         }
@@ -37,13 +41,15 @@ namespace ZFood.Web.Controllers
         [HttpGet("{id}", Name = "GetRestaurant")]
         public async Task<ActionResult<RestaurantDTO>> Get(string id)
         {
+            log.Debug($"Searching for restaurant {id}"); 
             var restaurant = await service.FindById(id);
 
             if (restaurant == null)
             {
+                log.Debug($"Restaurant {id} was not found");
                 return NotFound();
             }
-
+            log.Debug($"Restaurant {id} was found and returned");
             return restaurant.ToDTO();
         }
 
@@ -53,11 +59,13 @@ namespace ZFood.Web.Controllers
         {
             try
             {
+                log.Debug("Trying to create a restaurant");
                 var createdRestaurant = await service.CreateRestaurant(dto.FromDTO());
                 return CreatedAtRoute("GetRestaurant", new { id = createdRestaurant.Id }, createdRestaurant.ToDTO());
             }
             catch
             {
+                log.Debug("Fail on trying to create a restaurant");
                 return BadRequest();
             }
         }
@@ -66,6 +74,7 @@ namespace ZFood.Web.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateRestaurantRequestDTO dto)
         {
+            log.Debug($"Trying to edit restaurant {id}");
             try
             {
                 await service.UpdateRestaurant(dto.FromDTO(id));
@@ -73,10 +82,12 @@ namespace ZFood.Web.Controllers
             }
             catch (EntityNotFoundException exception)
             {
+                log.Debug($"Fail on trying to edit restaurant {id}");
                 return NotFound(exception.Message);
             }
             catch
             {
+                log.Debug($"Fail on trying to edit restaurant {id}");
                 return BadRequest();
             }
         }
@@ -85,6 +96,7 @@ namespace ZFood.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
+            log.Debug($"Deleting restaurant {id}");
             await service.Delete(id);
             return NoContent();
         }

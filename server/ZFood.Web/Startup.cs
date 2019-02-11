@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using log4net;
+using log4net.Config;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 using ZFood.Core;
 using ZFood.Core.API;
 using ZFood.Core.Decorator;
@@ -24,6 +28,12 @@ namespace ZFood.Web
 
         public Startup(IConfiguration configuration)
         {
+            var log4netConfig = new XmlDocument();
+            log4netConfig.Load(File.OpenRead("LogSettings.config"));
+
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, log4netConfig["log4net"]);
+
             Configuration = configuration;
         }
 

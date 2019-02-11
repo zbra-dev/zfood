@@ -17,11 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
@@ -31,6 +33,12 @@
     <ProjectReference Include="..\ZFood.Model\ZFood.Model.csproj" />
     <ProjectReference Include="..\ZFood.Persistence.API\ZFood.Persistence.API.csproj" />
     <ProjectReference Include="..\ZFood.Persistence\ZFood.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="LogSettings.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
