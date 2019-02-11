@@ -32,12 +32,6 @@ namespace ZFood.Core.Validators.Impl
                 validationResult.Exception = new EntityNotFoundException($"Could not find User {request.Id}");
                 return validationResult;
             }
-
-            var username = await repository.FindByUsername(request.Username);
-            if (username != null)
-            {
-                validationResult.Exception = new EntityAlreadyExistsException($"Username {request.Username} already exists");
-            }
             return validationResult;
         }
     }
