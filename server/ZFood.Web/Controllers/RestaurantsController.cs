@@ -2,7 +2,6 @@ using log4net;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Core.API.Exceptions;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
 
@@ -57,17 +56,9 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateRestaurantRequestDTO dto)
         {
-            try
-            {
-                log.Debug("Trying to create a restaurant");
-                var createdRestaurant = await service.CreateRestaurant(dto.FromDTO());
-                return CreatedAtRoute("GetRestaurant", new { id = createdRestaurant.Id }, createdRestaurant.ToDTO());
-            }
-            catch
-            {
-                log.Debug("Fail on trying to create a restaurant");
-                return BadRequest();
-            }
+            log.Debug("Trying to create a restaurant");
+            var createdRestaurant = await service.CreateRestaurant(dto.FromDTO());
+            return CreatedAtRoute("GetRestaurant", new { id = createdRestaurant.Id }, createdRestaurant.ToDTO());
         }
 
         // PUT restaurants/5
@@ -75,21 +66,8 @@ namespace ZFood.Web.Controllers
         public async Task<ActionResult> Put(string id, [FromBody] UpdateRestaurantRequestDTO dto)
         {
             log.Debug($"Trying to edit restaurant {id}");
-            try
-            {
-                await service.UpdateRestaurant(dto.FromDTO(id));
-                return NoContent();
-            }
-            catch (EntityNotFoundException exception)
-            {
-                log.Debug($"Fail on trying to edit restaurant {id}");
-                return NotFound(exception.Message);
-            }
-            catch
-            {
-                log.Debug($"Fail on trying to edit restaurant {id}");
-                return BadRequest();
-            }
+            await service.UpdateRestaurant(dto.FromDTO(id));
+            return NoContent();
         }
 
         // DELETE restaurants/5

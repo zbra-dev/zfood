@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZFood.Core.API;
-using ZFood.Core.API.Exceptions;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
 
@@ -49,17 +48,9 @@ namespace ZFood.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-            try
-            {
-                log.Debug("Trying to create a visit");
-                var createdVisit = await service.CreateVisit(dto.FromDTO());
-                return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
-            }
-            catch
-            {
-                log.Debug("Fail on trying to create a visit");
-                return BadRequest();
-            }
+            log.Debug("Trying to create a visit");
+            var createdVisit = await service.CreateVisit(dto.FromDTO());
+            return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
         }
 
         // PUT visit/5
@@ -67,21 +58,8 @@ namespace ZFood.Web.Controllers
         public async Task<ActionResult> Put(string id, [FromBody] UpdateVisitRequestDTO dto)
         {
             log.Debug($"Trying to edit visit {id}");
-            try
-            {
-                await service.UpdateVisit(dto.FromDTO(id));
-                return NoContent();
-            }
-            catch (EntityNotFoundException exception)
-            {
-                log.Debug($"Fail on trying to edit visit {id}");
-                return NotFound(exception.Message);
-            }
-            catch
-            {
-                log.Debug($"Fail on trying to edit visit {id}");
-                return BadRequest();
-            }
+            await service.UpdateVisit(dto.FromDTO(id));
+            return NoContent();
         }
 
         // DELETE visit/5

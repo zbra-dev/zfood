@@ -39,7 +39,7 @@ namespace ZFood.Core.Validators.Impl
                 return validationResult;
             }
 
-                return validationResult;
+            return validationResult;
         }
     }
 }
