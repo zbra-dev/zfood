@@ -20,6 +20,14 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
+        /// <summary>
+        /// Searches for visits
+        /// </summary>
+        /// <param name="take">Number of visits to take</param>
+        /// <param name="skip">Number of visits to skip</param>
+        /// <param name="query">Query</param>
+        /// <param name="count">Count visits</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<PageDTO<VisitDTO>>> Get(int skip, int take, bool count, string query)
         {
@@ -29,6 +37,11 @@ namespace ZFood.Web.Controllers
         }
 
         // GET /Visit/5
+        /// <summary>
+        ///  Finds a Visit by Id. If a Visit cannot be found, a 404 HTTP Response will be returned
+        /// </summary>
+        /// <param name="id">Id of the Visit to be found</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetVisit")]
         public async Task<ActionResult<VisitDTO>> Get(string id)
         {
@@ -45,6 +58,11 @@ namespace ZFood.Web.Controllers
         }
 
         // POST Visit
+        /// <summary>
+        /// Creates a Visit with the given data
+        /// </summary>
+        /// <param name="dto">Contains the necessary fields to create a Visit.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
@@ -54,6 +72,12 @@ namespace ZFood.Web.Controllers
         }
 
         // PUT visit/5
+        /// <summary>
+        /// Updates a Visit with the given data
+        /// </summary>
+        /// <param name="id">Id of the Visit to be updated. Be sure that this Visit already exists</param>
+        /// <param name="dto">Contains the data of the Visit to be changed</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateVisitRequestDTO dto)
         {
@@ -63,6 +87,11 @@ namespace ZFood.Web.Controllers
         }
 
         // DELETE visit/5
+        /// <summary>
+        /// Deletes a Visit by Id
+        /// </summary>
+        /// <param name="id">Id of the Visit to be deleted</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

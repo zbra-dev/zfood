@@ -37,6 +37,11 @@ namespace ZFood.Web.Controllers
         }
 
         // GET restaurants/5
+        /// <summary>
+        ///  Finds a Restaurant by Id. If a Restaurant cannot be found, a 404 HTTP Response will be returned
+        /// </summary>
+        /// <param name="id">Id of the Restaurant to be found</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetRestaurant")]
         public async Task<ActionResult<RestaurantDTO>> Get(string id)
         {
@@ -53,6 +58,11 @@ namespace ZFood.Web.Controllers
         }
 
         // POST restaurants
+        /// <summary>
+        /// Creates a Restaurant with the given data
+        /// </summary>
+        /// <param name="dto">Contains the necessary fields to create a Restaurant</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateRestaurantRequestDTO dto)
         {
@@ -62,6 +72,12 @@ namespace ZFood.Web.Controllers
         }
 
         // PUT restaurants/5
+        /// <summary>
+        /// Updates a Restaurant with the given data
+        /// </summary>
+        /// <param name="id">Id of the Restaurant to be updated. Be sure that this Restaurant exists</param>
+        /// <param name="dto">Contains the data of the Restaurant to be changed</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateRestaurantRequestDTO dto)
         {
@@ -71,6 +87,11 @@ namespace ZFood.Web.Controllers
         }
 
         // DELETE restaurants/5
+        /// <summary>
+        /// Deletes a Restaurant by Id
+        /// </summary>
+        /// <param name="id">Id of the Restaurant to be deleted</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

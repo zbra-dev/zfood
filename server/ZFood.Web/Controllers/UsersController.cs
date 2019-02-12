@@ -20,6 +20,14 @@ namespace ZFood.Web.Controllers
             this.service = service;
         }
 
+        /// <summary>
+        /// Searches for users
+        /// </summary>
+        /// <param name="take">Number of users to take</param>
+        /// <param name="skip">Number of users to skip</param>
+        /// <param name="query">Query</param>
+        /// <param name="count">Count users</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count, string query)
         {
@@ -29,6 +37,11 @@ namespace ZFood.Web.Controllers
         }
 
         // GET user/5
+        /// <summary>
+        ///  Finds a User by Id. If a User cannot be found, a 404 HTTP Response will be returned
+        /// </summary>
+        /// <param name="id">Id of the User to be found</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<ActionResult<UserDTO>> Get(string id)
         {
@@ -45,6 +58,11 @@ namespace ZFood.Web.Controllers
         }
 
         // POST user
+        /// <summary>
+        /// Creates a User with the given data
+        /// </summary>
+        /// <param name="dto">Contains the necessary fields to create a User.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateUserRequestDTO dto)
         {
@@ -54,6 +72,12 @@ namespace ZFood.Web.Controllers
         }
 
         // PUT user/5
+        /// <summary>
+        /// Updates a User with the given data
+        /// </summary>
+        /// <param name="id">Id of the User to be updated. Be sure that this User already exists</param>
+        /// <param name="dto">Contains the data of the User to be changed</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateUserRequestDTO dto)
         {
@@ -63,6 +87,11 @@ namespace ZFood.Web.Controllers
         }
 
         // DELETE user/5
+        /// <summary>
+        /// Deletes a User by Id
+        /// </summary>
+        /// <param name="id">Id of the User to be deleted</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
