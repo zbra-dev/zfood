@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Core.API.Exceptions;
+using ZFood.Model;
 using ZFood.Persistence.API;
 
 namespace ZFood.Core.Validators.Impl
@@ -27,7 +28,7 @@ namespace ZFood.Core.Validators.Impl
             var user = await repository.FindById(request.Id);
             if (user == null)
             {
-                validationResult.Exception = new EntityNotFoundException($"Could not find User {request.Id}");
+                validationResult.Exception = new EntityNotFoundException(typeof(User), request.Id);
                 return validationResult;
             }
             return validationResult;

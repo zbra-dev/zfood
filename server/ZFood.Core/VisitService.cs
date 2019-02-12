@@ -15,8 +15,8 @@ namespace ZFood.Core
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
 
-        public VisitService(IVisitRepository visitRepository, 
-                            IRestaurantRepository restaurantRepository, 
+        public VisitService(IVisitRepository visitRepository,
+                            IRestaurantRepository restaurantRepository,
                             IUserRepository userRepository)
         {
             this.visitRepository = visitRepository;
@@ -68,19 +68,19 @@ namespace ZFood.Core
             var visit = await FindById(visitRequest.Id);
             if (visit == null)
             {
-                throw new EntityNotFoundException($"Could not find Visit {visitRequest.Id}");
+                throw new EntityNotFoundException(typeof(Visit), visitRequest.Id);
             }
 
             var restaurant = await restaurantRepository.FindById(visitRequest.RestaurantId);
             if (restaurant == null)
             {
-                throw new EntityNotFoundException($"Could not find Restaurant {visitRequest.RestaurantId}");
+                throw new EntityNotFoundException(typeof(Restaurant), visitRequest.RestaurantId);
             }
 
             var user = await userRepository.FindById(visitRequest.UserId);
             if (user == null)
             {
-                throw new EntityNotFoundException($"Could not find User {visitRequest.UserId}");
+                throw new EntityNotFoundException(typeof(User), visitRequest.UserId);
             }
 
             await visitRepository.UpdateVisit(visitRequest.ToEntity());

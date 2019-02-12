@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Core.API.Exceptions;
+using ZFood.Model;
 using ZFood.Persistence.API;
 
 namespace ZFood.Core.Validators.Impl
@@ -34,21 +35,21 @@ namespace ZFood.Core.Validators.Impl
                 var visit = visitRepository.FindById(request.Id);
                 if (visit == null)
                 {
-                    validationResult.Exception = new EntityNotFoundException($"Could not find Visit {request.Id}");
+                    validationResult.Exception = new EntityNotFoundException(typeof(Visit), request.Id);
                     return validationResult;
                 }
 
                 var restaurant = restaurantRepository.FindById(request.RestaurantId);
                 if (restaurant == null)
                 {
-                    validationResult.Exception = new EntityNotFoundException($"Could not find Restaurant {request.RestaurantId}");
+                    validationResult.Exception = new EntityNotFoundException(typeof(Restaurant), request.RestaurantId);
                     return validationResult;
                 }
 
                 var user = userRepository.FindById(request.UserId);
                 if (user == null)
                 {
-                    validationResult.Exception = new EntityNotFoundException($"Could not find User {request.UserId}");
+                    validationResult.Exception = new EntityNotFoundException(typeof(User), request.UserId);
                     return validationResult;
                 }
 

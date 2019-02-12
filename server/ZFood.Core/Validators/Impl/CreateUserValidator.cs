@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Core.API.Exceptions;
+using ZFood.Model;
 using ZFood.Persistence.API;
 
 namespace ZFood.Core.Validators.Impl
@@ -28,14 +29,14 @@ namespace ZFood.Core.Validators.Impl
             var email = await repository.FindByEmail(request.Email);
             if (email != null)
             {
-                validationResult.Exception = new EntityAlreadyExistsException($"Email {request.Email} already exists");
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), request.Email);
                 return validationResult;
             }
 
             var username = await repository.FindByUsername(request.Username);
             if (username != null)
             {
-                validationResult.Exception = new EntityAlreadyExistsException($"Username {request.Username} already exists");
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), request.Username);
                 return validationResult;
             }
 
