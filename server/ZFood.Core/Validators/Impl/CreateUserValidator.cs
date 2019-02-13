@@ -29,14 +29,14 @@ namespace ZFood.Core.Validators.Impl
             var email = await repository.FindByEmail(request.Email);
             if (email != null)
             {
-                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), request.Email);
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), request.Email);
                 return validationResult;
             }
 
             var username = await repository.FindByUsername(request.Username);
             if (username != null)
             {
-                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), request.Username);
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Username), request.Username);
                 return validationResult;
             }
 

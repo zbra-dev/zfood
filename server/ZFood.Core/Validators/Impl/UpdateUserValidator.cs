@@ -31,6 +31,14 @@ namespace ZFood.Core.Validators.Impl
                 validationResult.Exception = new EntityNotFoundException(typeof(User), request.Id);
                 return validationResult;
             }
+
+            var email = await repository.FindByEmail(request.Email);
+            if (email != null)
+            {
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), request.Email);
+                return validationResult;
+            }
+
             return validationResult;
         }
     }

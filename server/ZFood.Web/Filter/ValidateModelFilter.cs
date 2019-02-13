@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using log4net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System.Text;
@@ -7,6 +8,8 @@ namespace ZFood.Web.Filter
 {
     public class ValidateModelFilter : ActionFilterAttribute
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(ExceptionFilter));
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
@@ -24,6 +27,7 @@ namespace ZFood.Web.Filter
 
                 var errorResponse = new ModelStateErrorResponse(context);
                 context.Result = new BadRequestObjectResult(errorResponse);
+                log.Error($"{errorResponse.Message}");
             }
         }
     }
