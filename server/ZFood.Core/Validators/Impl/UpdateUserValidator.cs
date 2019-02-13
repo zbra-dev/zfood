@@ -16,26 +16,28 @@ namespace ZFood.Core.Validators.Impl
             this.repository = repository;
         }
 
-        public async Task<ValidatorResult> Validate(UpdateUserRequest request)
+        public async Task<ValidatorResult> Validate(UpdateUserRequest updateUserRequest)
         {
             var validationResult = new ValidatorResult();
-            if (request == null)
+            if (updateUserRequest == null)
             {
-                validationResult.Exception = new ArgumentNullException(nameof(request));
+                validationResult.Exception = new ArgumentNullException(nameof(updateUserRequest));
                 return validationResult;
             }
 
-            var user = await repository.FindById(request.Id);
+            var user = await repository.FindById(updateUserRequest.Id);
             if (user == null)
             {
-                validationResult.Exception = new EntityNotFoundException(typeof(User), request.Id);
+                validationResult.Exception = new EntityNotFoundException(typeof(User), updateUserRequest.Id);
                 return validationResult;
             }
 
-            var email = await repository.FindByEmail(request.Email);
-            if (email != null)
+            var userFoundByEmail = await repository.FindByEmail(updateUserRequest.Email);
+            var userWithEmailExists = userFoundByEmail != null;
+            var isUserOwnerOfEmail = userWithEmailExists ? userFoundByEmail.Id == updateUserRequest.Id : false;
+            if (userWithEmailExists && !isUserOwnerOfEmail)
             {
-                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), request.Email);
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), updateUserRequest.Email);
                 return validationResult;
             }
 
