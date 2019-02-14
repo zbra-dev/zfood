@@ -34,7 +34,7 @@ namespace ZFood.Core.Validators.Impl
 
             var userFoundByEmail = await repository.FindByEmail(updateUserRequest.Email);
             var userWithEmailExists = userFoundByEmail != null;
-            var isUserOwnerOfEmail = userWithEmailExists ? userFoundByEmail.Id == updateUserRequest.Id : false;
+            var isUserOwnerOfEmail = userFoundByEmail?.Id == updateUserRequest.Id;
             if (userWithEmailExists && !isUserOwnerOfEmail)
             {
                 validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), updateUserRequest.Email);
