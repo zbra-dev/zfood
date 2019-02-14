@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using ZFood.Core.API.Utils;
 
 namespace ZFood.Core.API.Exceptions
 {
@@ -9,6 +11,16 @@ namespace ZFood.Core.API.Exceptions
         public EntityAlreadyExistsException(Type entityType, string propertyName, object propertyValue)
         {
             Message = $"{entityType.Name}'s {propertyName} {propertyValue} already exists";
+        }
+
+        public EntityAlreadyExistsException(Type entityType, params EntityValuePair[] entityValuePairs)
+        {
+            var messageBuilder = new StringBuilder();
+            foreach (var parameter in entityValuePairs)
+            {
+                messageBuilder.Append($"{parameter.PropertyName}: {parameter.PropertyValue}, ");
+            }
+            Message = $"{entityType.Name} with {messageBuilder.ToString()}already exists";
         }
     }
 }

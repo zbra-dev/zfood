@@ -63,5 +63,10 @@ namespace ZFood.Persistence
             entry.State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
+
+        public async Task<RestaurantEntity> FindRestaurantByNameAndAddress(string name, string address)
+        {
+            return await context.Restaurants.FirstOrDefaultAsync(r => r.Name == name && r.Address == address);
+        }
     }
 }

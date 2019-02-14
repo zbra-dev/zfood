@@ -15,7 +15,7 @@ namespace ZFood.Core.Validators
 
         public IValidator<CreateRestaurantRequest> CreateRestaurantCreationValidator()
         {
-            return new CreateRestaurantValidator();
+            return new CreateRestaurantValidator(repository);
         }
 
         public IValidator<UpdateRestaurantRequest> CreateUpdateRestaurantValidator()

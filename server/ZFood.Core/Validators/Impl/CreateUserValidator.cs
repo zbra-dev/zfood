@@ -26,15 +26,15 @@ namespace ZFood.Core.Validators.Impl
                 return validationResult;
             }
 
-            var email = await repository.FindByEmail(request.Email);
-            if (email != null)
+            var userFoundByEmail = await repository.FindByEmail(request.Email);
+            if (userFoundByEmail != null)
             {
                 validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Email), request.Email);
                 return validationResult;
             }
 
-            var username = await repository.FindByUsername(request.Username);
-            if (username != null)
+            var userFoundByUsername = await repository.FindByUsername(request.Username);
+            if (userFoundByUsername != null)
             {
                 validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Username), request.Username);
                 return validationResult;
