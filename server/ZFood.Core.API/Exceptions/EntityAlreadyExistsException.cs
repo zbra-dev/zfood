@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using ZFood.Core.API.Utils;
 
 namespace ZFood.Core.API.Exceptions
 {

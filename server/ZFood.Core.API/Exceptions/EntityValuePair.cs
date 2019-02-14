@@ -1,4 +1,4 @@
-﻿namespace ZFood.Core.API.Utils
+﻿namespace ZFood.Core.API.Exceptions
 {
     public class EntityValuePair
     {

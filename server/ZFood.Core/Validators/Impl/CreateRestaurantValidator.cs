@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Core.API.Exceptions;
-using ZFood.Core.API.Utils;
 using ZFood.Model;
 using ZFood.Persistence.API;
 
