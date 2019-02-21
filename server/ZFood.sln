@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Web", "ZFood.Web\ZFood.Web.csproj", "{4C96A567-6AEE-4CF9-BF27-65196B16E8B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Web", "ZFood.Web\ZFood.Web.csproj", "{4C96A567-6AEE-4CF9-BF27-65196B16E8B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Core", "ZFood.Core\ZFood.Core.csproj", "{17E69024-C4EF-4730-ABFA-A774222C7922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Core", "ZFood.Core\ZFood.Core.csproj", "{17E69024-C4EF-4730-ABFA-A774222C7922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Core.API", "ZFood.Core.API\ZFood.Core.API.csproj", "{6F75EF46-7C6C-43BA-8D2A-149B0E3AE2F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Core.API", "ZFood.Core.API\ZFood.Core.API.csproj", "{6F75EF46-7C6C-43BA-8D2A-149B0E3AE2F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Model", "ZFood.Model\ZFood.Model.csproj", "{322112DC-7EDA-499F-973E-A4D588FBAB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Model", "ZFood.Model\ZFood.Model.csproj", "{322112DC-7EDA-499F-973E-A4D588FBAB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Persistence", "ZFood.Persistence\ZFood.Persistence.csproj", "{CC73347E-B114-4939-9699-BD6BFE654979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Persistence", "ZFood.Persistence\ZFood.Persistence.csproj", "{CC73347E-B114-4939-9699-BD6BFE654979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZFood.Persistence.API", "ZFood.Persistence.API\ZFood.Persistence.API.csproj", "{39FAC51D-0729-4D7B-ABBC-3021201489FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZFood.Persistence.API", "ZFood.Persistence.API\ZFood.Persistence.API.csproj", "{39FAC51D-0729-4D7B-ABBC-3021201489FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4C96A567-6AEE-4CF9-BF27-65196B16E8B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,5 +97,11 @@ Global
 		{39FAC51D-0729-4D7B-ABBC-3021201489FF}.Release|x64.Build.0 = Release|Any CPU
 		{39FAC51D-0729-4D7B-ABBC-3021201489FF}.Release|x86.ActiveCfg = Release|Any CPU
 		{39FAC51D-0729-4D7B-ABBC-3021201489FF}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C59BD0C4-91AB-465A-AE65-9D7F875D155A}
 	EndGlobalSection
 EndGlobal

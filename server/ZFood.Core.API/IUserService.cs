@@ -1,11 +1,13 @@
-﻿using ZFood.Model;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ZFood.Model;
 
 namespace ZFood.Core.API
 {
     public interface IUserService
     {
         Task<User> FindById(string id);
+
+        Task<User> FindByProviderId(CredentialsProvider provider, string providerId);
 
         Task<Page<User>> Get(int skip, int take, bool count, string query);
 

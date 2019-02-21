@@ -8,6 +8,10 @@
 
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string Provider { get; set; }
+
+        public string ProviderId { get; set; }
+
+        public string AvatarUrl { get; set; }
     }
 }

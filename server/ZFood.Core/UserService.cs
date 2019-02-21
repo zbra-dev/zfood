@@ -22,6 +22,12 @@ namespace ZFood.Core
             return entity?.ToModel();
         }
 
+        public async Task<User> FindByProviderId(CredentialsProvider provider, string providerId)
+        {
+            var entity = await repository.FindByProviderId(provider.ToString(), providerId);
+            return entity?.ToModel();
+        }
+
         public async Task<Page<User>> Get(int skip, int take, bool count, string query)
         {
             var increasedTake = take++;

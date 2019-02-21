@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -18,6 +17,7 @@ using ZFood.Core.Decorator;
 using ZFood.Core.Validators;
 using ZFood.Persistence;
 using ZFood.Persistence.API;
+using ZFood.Web.Configuration;
 using ZFood.Web.Filter;
 
 namespace ZFood.Web
@@ -100,12 +100,20 @@ namespace ZFood.Web
                 return new UserValidatorDecorator(service, factory);
             });
 
+            // Configuration
+            services.Add(new ServiceDescriptor(typeof(SlackConfiguration), provider => GetSlackConfiguration(), ServiceLifetime.Singleton));
+
             // Filter
             services.AddMvc(config =>
             {
                 config.Filters.Add(new ValidateModelFilter());
                 config.Filters.Add(new ExceptionFilter());
             });
+        }
+
+        private SlackConfiguration GetSlackConfiguration()
+        {
+            return Configuration.GetSection("Slack").Get<SlackConfiguration>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

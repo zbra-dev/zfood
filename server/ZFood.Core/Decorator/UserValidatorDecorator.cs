@@ -33,6 +33,11 @@ namespace ZFood.Core.Decorator
             return await userService.FindById(id);
         }
 
+        public Task<User> FindByProviderId(CredentialsProvider provider, string providerId)
+        {
+            return userService.FindByProviderId(provider, providerId);
+        }
+
         public async Task<Page<User>> Get(int skip, int take, bool count, string query)
         {
             return await userService.Get(skip, take, count, query);

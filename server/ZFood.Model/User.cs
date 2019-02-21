@@ -8,6 +8,8 @@
 
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string AvatarUrl { get; set; }
+
+        public UserCredentials Credentials { get; set; }
     }
 }

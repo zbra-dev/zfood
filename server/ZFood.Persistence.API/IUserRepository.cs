@@ -7,7 +7,7 @@ namespace ZFood.Persistence.API
     {
         Task<UserEntity> FindById(string id);
 
-        Task<UserEntity> FindByUsername(string username);
+        Task<UserEntity> FindByProviderId(string provider, string providerId);
 
         Task<UserEntity> FindByEmail(string email);
 

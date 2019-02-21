@@ -21,7 +21,8 @@ namespace ZFood.Web.Extensions
             {
                 Name = requestDTO.Name,
                 Email = requestDTO.Email,
-                Username = requestDTO.Username
+                Provider = requestDTO.Provider,
+                ProviderId = requestDTO.ProviderId,
             };
         }
 

@@ -18,7 +18,6 @@ namespace ZFood.Core.Validators.Impl
 
         public async Task<ValidatorResult> Validate(CreateUserRequest request)
         {
-
             var validationResult = new ValidatorResult();
             if (request == null)
             {
@@ -33,10 +32,21 @@ namespace ZFood.Core.Validators.Impl
                 return validationResult;
             }
 
-            var userFoundByUsername = await repository.FindByUsername(request.Username);
-            if (userFoundByUsername != null)
+            if (!Enum.TryParse<CredentialsProvider>(request.Provider, out var provider))
             {
-                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), nameof(User.Username), request.Username);
+                validationResult.Exception = new InvalidValueException(typeof(CredentialsProvider), request.Provider);
+                return validationResult;
+            }
+
+            var userFoundByProviderId = await repository.FindByProviderId(request.Provider, request.ProviderId);
+            if (userFoundByProviderId != null)
+            {
+                var valuePairs = new[]
+                {
+                    new EntityValuePair(nameof(User.Credentials.Provider), request.Provider),
+                    new EntityValuePair(nameof(User.Credentials.ProviderId), request.ProviderId),
+                };
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(User), valuePairs);
                 return validationResult;
             }
 

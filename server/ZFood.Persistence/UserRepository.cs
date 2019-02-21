@@ -20,9 +20,9 @@ namespace ZFood.Persistence
             return await context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<UserEntity> FindByUsername(string username)
+        public async Task<UserEntity> FindByProviderId(string provider, string providerId)
         {
-            return await context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await context.Users.FirstOrDefaultAsync(u => u.Provider == provider && u.ProviderId == providerId);
         }
 
         public async Task<UserEntity> FindByEmail(string email)

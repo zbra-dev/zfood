@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZFood.Core.API
+﻿namespace ZFood.Core.API
 {
     public class CreateUserRequest
     {
@@ -10,6 +6,10 @@ namespace ZFood.Core.API
 
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string AvatarUrl { get; set; }
+
+        public string Provider { get; set; }
+
+        public string ProviderId { get; set; }
     }
 }
