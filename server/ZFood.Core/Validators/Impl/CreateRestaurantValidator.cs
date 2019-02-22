@@ -28,9 +28,12 @@ namespace ZFood.Core.Validators.Impl
             var restaurant = await repository.FindRestaurantByNameAndAddress(request.Name, request.Address);
             if (restaurant != null)
             {
-                var restaurantNameProperty = new EntityValuePair(nameof(Restaurant.Name), request.Name);
-                var restaurantAddressProperty = new EntityValuePair(nameof(Restaurant.Address), request.Address);
-                validationResult.Exception = new EntityAlreadyExistsException(typeof(Restaurant), restaurantNameProperty, restaurantAddressProperty);
+                var restaurantValuePairs = new[]
+                {
+                    new EntityValuePair(nameof(Restaurant.Name), request.Name),
+                    new EntityValuePair(nameof(Restaurant.Address), request.Address)
+                };
+                validationResult.Exception = new EntityAlreadyExistsException(typeof(Restaurant), restaurantValuePairs);
                 return validationResult;
             }
 
