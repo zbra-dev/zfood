@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using log4net;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using ZFood.Persistence.API;
@@ -9,6 +10,8 @@ namespace ZFood.Persistence
     public class VisitRepository : IVisitRepository
     {
         private readonly ZFoodDbContext context;
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(VisitRepository));
 
         public VisitRepository(ZFoodDbContext context)
         {
@@ -61,9 +64,9 @@ namespace ZFood.Persistence
             {
                 await context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException error)
             {
-                // TODO: Log error
+                log.Error($"{error.Message}");
             }
         }
     }
