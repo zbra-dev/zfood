@@ -27,7 +27,7 @@ namespace ZFood.Web.Controllers
         }
 
         [HttpGet("slack")]
-        public async Task<IActionResult> SlackAuthentication(string provider)
+        public async Task<IActionResult> SlackAuthentication()
         {
             if (!Request.Query.TryGetValue("code", out var codes))
             {
