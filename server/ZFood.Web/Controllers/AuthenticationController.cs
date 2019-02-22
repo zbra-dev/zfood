@@ -47,7 +47,7 @@ namespace ZFood.Web.Controllers
                 var response = await httpClient.PostAsync(slackConfiguration.Url, payload);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    throw new AuthenticationException($"Error authenticating user with {provider}");
+                    throw new AuthenticationException($"Error authenticating user");
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
