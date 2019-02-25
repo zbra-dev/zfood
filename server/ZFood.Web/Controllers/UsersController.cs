@@ -27,8 +27,12 @@ namespace ZFood.Web.Controllers
         /// <param name="skip">Number of users to skip</param>
         /// <param name="query">Query</param>
         /// <param name="count">Count users</param>
+        /// <response code="200">
+        /// Returned code when a page, with the given parameters, can be build successfully
+        /// </response>
         /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count, string query)
         {
             log.Debug("Searching for some users");
@@ -38,11 +42,19 @@ namespace ZFood.Web.Controllers
 
         // GET user/5
         /// <summary>
-        ///  Finds a User by Id. If a User cannot be found, a 404 HTTP Response will be returned
+        /// Finds a User by Id
         /// </summary>
         /// <param name="id">Id of the User to be found</param>
+        /// <response code="200">
+        /// Returned code when a User with the specified Id can be found
+        /// </response>
+        /// <response code="404">
+        /// Returned code when a User with the specified Id cannot be found
+        /// </response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetUser")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<UserDTO>> Get(string id)
         {
             log.Debug($"Searching for user {id}");
@@ -62,8 +74,16 @@ namespace ZFood.Web.Controllers
         /// Creates a User with the given data
         /// </summary>
         /// <param name="dto">Contains the necessary fields to create a User.</param>
+        /// <response code="201">
+        /// Returned code when the User can be created successfully
+        /// </response>
+        /// <response code="400">
+        /// Returned code when trying to create a new User with the same properties of an already existing User
+        /// </response>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult> Post([FromBody] CreateUserRequestDTO dto)
         {
             log.Debug("Trying to create user");
@@ -77,8 +97,20 @@ namespace ZFood.Web.Controllers
         /// </summary>
         /// <param name="id">Id of the User to be updated. Be sure that this User already exists</param>
         /// <param name="dto">Contains the data of the User to be changed</param>
+        /// <response code="204">
+        /// Returned code when the User can be updated successfully
+        /// </response>
+        /// <response code="400">
+        /// Returned code when trying to update a User with the same Email of an another existing User  
+        /// </response>
+        /// <response code="404">
+        /// Returned code when cannot find the User to be updated with the given Id
+        /// </response>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateUserRequestDTO dto)
         {
             log.Debug($"Trying to edit user {id}");
@@ -91,8 +123,12 @@ namespace ZFood.Web.Controllers
         /// Deletes a User by Id
         /// </summary>
         /// <param name="id">Id of the User to be deleted</param>
+        /// <response code="204">
+        /// Returned code when a User can be deleted successfully
+        /// </response>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public async Task<ActionResult> Delete(string id)
         {
             log.Debug($"Deleting user {id}");
