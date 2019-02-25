@@ -57,6 +57,11 @@ namespace ZFood.Core
 
         public async Task UpdateUser(UpdateUserRequest userRequest)
         {
+            var user = await repository.FindById(userRequest.Id);
+            userRequest.Provider = user.Provider;
+            userRequest.ProviderId = user.ProviderId;
+            userRequest.AvatarUrl = user.AvatarUrl;
+
             await repository.UpdateUser(userRequest.ToEntity());
         }
 

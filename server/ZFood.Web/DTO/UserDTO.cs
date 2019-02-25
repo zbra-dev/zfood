@@ -10,5 +10,8 @@ namespace ZFood.Web.DTO
 
         [DataMember]
         public string Email { get; set; }
+
+        [DataMember]
+        public string AvatarUrl { get; set; }
     }
 }

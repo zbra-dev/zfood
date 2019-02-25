@@ -44,6 +44,9 @@ namespace ZFood.Core.Extensions
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
+                AvatarUrl = user.AvatarUrl,
+                Provider = user.Provider,
+                ProviderId = user.ProviderId,
             };
         }
     }

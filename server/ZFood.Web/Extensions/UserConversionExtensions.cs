@@ -12,6 +12,7 @@ namespace ZFood.Web.Extensions
             {
                 Name = user.Name,
                 Email = user.Email,
+                AvatarUrl = user.AvatarUrl,
             };
         }
 
@@ -32,7 +33,7 @@ namespace ZFood.Web.Extensions
             {
                 Id = id,
                 Name = requestDTO.Name,
-                Email = requestDTO.Email
+                Email = requestDTO.Email,
             };
         }
     }
