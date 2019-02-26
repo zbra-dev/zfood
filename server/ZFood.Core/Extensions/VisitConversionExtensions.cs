@@ -12,9 +12,7 @@ namespace ZFood.Core.Extensions
             {
                 Id = entity.Id,
                 Rate = entity.Rate,
-                RestaurantId = entity.RestaurantId,
                 Restaurant = entity.Restaurant.ToModel(),
-                UserId = entity.UserId,
                 User = entity.User.ToModel()
             };
         }
