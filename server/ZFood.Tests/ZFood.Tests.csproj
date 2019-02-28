@@ -13,7 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZFood.Persistence.API\ZFood.Persistence.API.csproj" />
+    <ProjectReference Include="..\ZFood.Persistence\ZFood.Persistence.csproj" />
     <ProjectReference Include="..\ZFood.Web\ZFood.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

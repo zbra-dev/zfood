@@ -38,7 +38,7 @@
 
   <ItemGroup>
     <Content Update="LogSettings.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
