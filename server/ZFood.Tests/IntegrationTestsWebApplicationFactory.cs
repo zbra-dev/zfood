@@ -17,10 +17,13 @@ namespace ZFood.Tests
                 var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
-                services.AddDbContext<ZFoodDbContext>(options =>
+                services.AddDbContext<ZFoodDbContext>(o =>
                 {
-                    options.UseInMemoryDatabase("zfood_tests");
-                    options.UseInternalServiceProvider(serviceProvider);
+                    o.UseInMemoryDatabase("zfood_tests");
+                    o.UseInternalServiceProvider(serviceProvider);
+                    // Use NoTracking by default
+                    // https://docs.microsoft.com/en-us/ef/core/querying/tracking#no-tracking-queries
+                    o.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 });
 
                 var provider = services.BuildServiceProvider();
