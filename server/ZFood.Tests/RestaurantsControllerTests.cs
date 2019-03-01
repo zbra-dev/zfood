@@ -61,5 +61,21 @@ namespace ZFood.Tests
             Assert.Equal(name, foundRestaurant.Name);
             Assert.Equal(address, foundRestaurant.Address);
         }
+
+        [Theory]
+        [InlineData("10", "Update Test 1", "Update Test 1")]
+        [InlineData("11", "Update Test 2", "Update Test 2")]
+        [InlineData("12", "Update Test 3", "Update Test 3")]
+        public async Task PutRestaurant(string id, string name, string address)
+        {
+            var request = new UpdateRestaurantRequestDTO
+            {
+                Name = name,
+                Address = address,
+            };
+            var url = $"{Url}/{id}";
+            var updateResponse = await client.PutAsJsonAsync(url, request);
+            Assert.Equal(HttpStatusCode.NoContent, updateResponse.StatusCode);
+        }
     }
 }
