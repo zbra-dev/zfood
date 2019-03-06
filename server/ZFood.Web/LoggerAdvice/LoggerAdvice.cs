@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ZFood.Web.Logger
@@ -62,11 +61,11 @@ namespace ZFood.Web.Logger
                 stopwatch.Stop();
                 if (exception == null)
                 {
-                    LogEndInvoke(targetMethod, arguments, stopwatch);
+                    LogEndInvoke(targetMethod, stopwatch);
                 }
                 else
                 {
-                    LogError(targetMethod, exception, stopwatch);
+                    LogErrors(targetMethod, stopwatch, exception);
                 }
             }
         }
@@ -74,42 +73,36 @@ namespace ZFood.Web.Logger
         private void LogBeginInvoke(MethodInfo methodInfo, object[] arguments)
         {
             var argumentsList = BuildArgumentsList(arguments);
-            log.Debug($"[Begin Invoke: Class '{decoratedObject.GetType().Name}', " +
-                $"Method: [{methodInfo.Name}] with arguments [{argumentsList}]]");
+            log.Debug($"Begin Invoke: Class '{decoratedObject.GetType().Name}', " +
+                $"Method: [{methodInfo.Name}] with arguments [{argumentsList}]");
         }
 
         private string BuildArgumentsList(object[] arguments)
         {
-            var argumentsList = new StringBuilder();
             if (!arguments.Any())
             {
-                argumentsList.Append("none");
+                return "none";
             }
-            else
-            {
-                foreach (var argument in arguments)
-                {
-                    argumentsList.Append($"{argument}");
-                    argumentsList.Append(" ");
-                }
-            }
-
-            return argumentsList.ToString();
+            return string.Join(", ", arguments);
+        }
+        
+        private void LogEndInvoke(MethodInfo methodInfo, Stopwatch stopwatch)
+        {
+            var baseErrorMessage = BuildEndInvokeBaseLogMessage(methodInfo, stopwatch);
+            log.Debug($"{baseErrorMessage}");
         }
 
-        private void LogEndInvoke(MethodInfo methodInfo, object[] arguments, Stopwatch stopwatch)
+        private string BuildEndInvokeBaseLogMessage(MethodInfo methodInfo, Stopwatch stopwatch)
         {
-            log.Debug($"[End Invoke: Class '{decoratedObject.GetType().Name}', " +
+            return $"End Invoke: Class '{decoratedObject.GetType().Name}', " +
                 $"Method [{methodInfo.Name}] " +
-                $"in [{stopwatch.ElapsedMilliseconds}] ms]");
+                $"in [{stopwatch.ElapsedMilliseconds}] ms";
         }
 
-        private void LogError(MethodInfo methodInfo, Exception ex, Stopwatch stopwatch)
+        private void LogErrors(MethodInfo methodInfo, Stopwatch stopwatch, Exception exception)
         {
-            log.Error($"[End Invoke: Class '{decoratedObject.GetType().Name}', " +
-                $"Method: [{methodInfo.Name}] " +
-                $"in [{stopwatch.ElapsedMilliseconds}] ms " +
-                $"with errors [{ex.Message}]]");
+            var baseErrorMessage = BuildEndInvokeBaseLogMessage(methodInfo, stopwatch);
+            log.Error($"{baseErrorMessage} with errors [{exception.Message}]");
         }
     }
 }
