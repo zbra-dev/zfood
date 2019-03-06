@@ -19,7 +19,7 @@ namespace ZFood.Core.Decorator
 
         public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
         {
-            await restaurantValidatorFactory.CreateRestaurantCreationValidator().ThrowIfNotValid(restaurant);         
+            await restaurantValidatorFactory.CreateRestaurantCreationValidator().ThrowIfNotValid(restaurant);        
             return await restaurantService.CreateRestaurant(restaurant);
         }
 

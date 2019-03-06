@@ -8,7 +8,7 @@ namespace ZFood.Web.Filter
 {
     public class ValidateModelFilter : ActionFilterAttribute
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(ExceptionFilter));
+        private static readonly ILog log = LogManager.GetLogger(typeof(ValidateModelFilter));
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {

@@ -18,6 +18,7 @@ using ZFood.Core.Validators;
 using ZFood.Persistence;
 using ZFood.Persistence.API;
 using ZFood.Web.Configuration;
+using ZFood.Web.Factory;
 using ZFood.Web.Filter;
 
 namespace ZFood.Web
@@ -79,25 +80,37 @@ namespace ZFood.Web
             services.AddTransient<IRestaurantService>(provider =>
             {
                 var restaurantRepository = provider.GetService<IRestaurantRepository>();
+                var repositoryProxy = LoggerAdviceFactory<IRestaurantRepository>.CreateLoggerAdvice(restaurantRepository);
+                var service = new RestaurantService(repositoryProxy);
+                var serviceProxy = LoggerAdviceFactory<IRestaurantService>.CreateLoggerAdvice(service);
                 var factory = provider.GetService<IRestaurantValidatorFactory>();
-                var service = new RestaurantService(restaurantRepository);
-                return new RestaurantValidatorDecorator(service, factory);
+                var factoryProxy = LoggerAdviceFactory<IRestaurantValidatorFactory>.CreateLoggerAdvice(factory);
+                var decorator = new RestaurantValidatorDecorator(serviceProxy, factoryProxy);                
+                return LoggerAdviceFactory<IRestaurantService>.CreateLoggerAdvice(decorator);
             });
             services.AddTransient<IVisitService>(provider =>
             {
                 var visitRepository = provider.GetService<IVisitRepository>();
+                var visitRepositoryProxy = LoggerAdviceFactory<IVisitRepository>.CreateLoggerAdvice(visitRepository);
                 var restaurantRepository = provider.GetService<IRestaurantRepository>();
+                var restaurantRepositoryProxy = LoggerAdviceFactory<IRestaurantRepository>.CreateLoggerAdvice(restaurantRepository);
                 var userRepository = provider.GetService<IUserRepository>();
+                var userRepositoryProxy = LoggerAdviceFactory<IUserRepository>.CreateLoggerAdvice(userRepository);
+                var service = new VisitService(visitRepositoryProxy, restaurantRepositoryProxy, userRepositoryProxy);
+                var serviceProxy = LoggerAdviceFactory<IVisitService>.CreateLoggerAdvice(service);
                 var factory = provider.GetService<IVisitValidatorFactory>();
-                var service = new VisitService(visitRepository, restaurantRepository, userRepository);
-                return new VisitValidatorDecorator(service, factory);
+                var decorator = new VisitValidatorDecorator(serviceProxy, factory);
+                return LoggerAdviceFactory<IVisitService>.CreateLoggerAdvice(decorator);
             });
             services.AddTransient<IUserService>(provider =>
             {
                 var userRepository = provider.GetService<IUserRepository>();
+                var userRepositoryProxy = LoggerAdviceFactory<IUserRepository>.CreateLoggerAdvice(userRepository);
+                var service = new UserService(userRepositoryProxy);
+                var serviceProxy = LoggerAdviceFactory<IUserService>.CreateLoggerAdvice(service);
                 var factory = provider.GetService<IUserValidatorFactory>();
-                var service = new UserService(userRepository);
-                return new UserValidatorDecorator(service, factory);
+                var decorator = new UserValidatorDecorator(serviceProxy, factory);
+                return LoggerAdviceFactory<IUserService>.CreateLoggerAdvice(decorator);
             });
 
             // Configuration

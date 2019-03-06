@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
+using ZFood.Web.Factory;
 
 namespace ZFood.Web.Controllers
 {
@@ -35,7 +36,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, bool count = false, string query = null)
         {
-            log.Debug("Searching for some restaurants");
             var page = await service.Get(take, skip, count, query);
             return page.ToDTO(r => r.ToDTO());
         }
@@ -57,7 +57,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<RestaurantDTO>> Get(string id)
         {
-            log.Debug($"Searching for restaurant {id}");
             var restaurant = await service.FindById(id);
 
             if (restaurant == null)
@@ -65,7 +64,6 @@ namespace ZFood.Web.Controllers
                 log.Debug($"Restaurant {id} was not found");
                 return NotFound();
             }
-            log.Debug($"Restaurant {id} was found and also returned");
             return restaurant.ToDTO();
         }
 
@@ -86,7 +84,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult> Post([FromBody] CreateRestaurantRequestDTO dto)
         {
-            log.Debug("Trying to create a restaurant");
             var createdRestaurant = await service.CreateRestaurant(dto.FromDTO());
             return CreatedAtRoute("GetRestaurant", new { id = createdRestaurant.Id }, createdRestaurant.ToDTO());
         }
@@ -109,7 +106,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateRestaurantRequestDTO dto)
         {
-            log.Debug($"Trying to edit restaurant {id}");
             await service.UpdateRestaurant(dto.FromDTO(id));
             return NoContent();
         }
@@ -127,7 +123,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(204)]
         public async Task<ActionResult> Delete(string id)
         {
-            log.Debug($"Deleting restaurant {id}");
             await service.Delete(id);
             return NoContent();
         }

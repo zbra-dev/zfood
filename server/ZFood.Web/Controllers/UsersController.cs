@@ -35,7 +35,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count, string query)
         {
-            log.Debug("Searching for some users");
             var page = await service.Get(skip, take, count, query);
             return page.ToDTO(u => u.ToDTO());
         }
@@ -57,7 +56,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<UserDTO>> Get(string id)
         {
-            log.Debug($"Searching for user {id}");
             var user = await service.FindById(id);
 
             if (user == null)
@@ -65,7 +63,6 @@ namespace ZFood.Web.Controllers
                 log.Debug($"User {id} was not found");
                 return NotFound();
             }
-            log.Debug($"User {id} was found and returned");
             return user.ToDTO();
         }
 
@@ -86,7 +83,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult> Post([FromBody] CreateUserRequestDTO dto)
         {
-            log.Debug("Trying to create user");
             var createdUser = await service.CreateUser(dto.FromDTO());
             return CreatedAtRoute("GetUser", new { id = createdUser.Id }, createdUser.ToDTO());
         }
@@ -113,7 +109,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateUserRequestDTO dto)
         {
-            log.Debug($"Trying to edit user {id}");
             await service.UpdateUser(dto.FromDTO(id));
             return NoContent();
         }
@@ -131,7 +126,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(204)]
         public async Task<ActionResult> Delete(string id)
         {
-            log.Debug($"Deleting user {id}");
             await service.DeleteUser(id);
             return NoContent();
         }
