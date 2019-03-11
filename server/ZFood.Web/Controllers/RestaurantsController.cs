@@ -35,6 +35,10 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, bool count = false, string query = null)
         {
+            if (take < 0 || skip < 0)
+            {
+                return BadRequest();
+            }
             log.Debug("Searching for some restaurants");
             var page = await service.Get(take, skip, count, query);
             return page.ToDTO(r => r.ToDTO());
