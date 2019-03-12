@@ -43,5 +43,35 @@ namespace ZFood.Tests
             Assert.Equal(name, foundRestaurant.Name);
             Assert.Equal(address, foundRestaurant.Address);
         }
+
+        [Theory]
+        [InlineData("Name Test 4", "")]
+        [InlineData("", "Address Test 4")]
+        [InlineData("", "")]
+        public async Task TestPostRestaurantWithEmptyValues(string name, string address)
+        {
+            var restaurant = new CreateRestaurantRequestDTO
+            {
+                Name = name,
+                Address = address,
+            };
+            var creationResponse = await client.PostAsJsonAsync(Url, restaurant);
+            Assert.Equal(HttpStatusCode.BadRequest, creationResponse.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("Name Test 1", "Address Test 1")]
+        [InlineData("Name Test 2", "Address Test 2")]
+        [InlineData("Name Test 3", "Address Test 3")]
+        public async Task TestPostRestaurantThatAlreadyExists(string name, string address)
+        {
+            var restaurant = new CreateRestaurantRequestDTO
+            {
+                Name = name,
+                Address = address,
+            };
+            var creationResponse = await client.PostAsJsonAsync(Url, restaurant);
+            Assert.Equal(HttpStatusCode.BadRequest, creationResponse.StatusCode);
+        }
     }
 }

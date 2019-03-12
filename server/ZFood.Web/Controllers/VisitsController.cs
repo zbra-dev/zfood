@@ -35,7 +35,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<VisitDTO>>> Get(int skip, int take, bool count, string query)
         {
-            log.Debug("Searching for some visits");
             var page = await service.Get(skip, take, count, query);
             return page.ToDTO(v => v.ToDTO());
         }
@@ -57,7 +56,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<VisitDTO>> Get(string id)
         {
-            log.Debug($"Searching for visit {id}");
             var visit = await service.FindById(id);
 
             if (visit == null)
@@ -65,7 +63,6 @@ namespace ZFood.Web.Controllers
                 log.Debug($"Visit {id} was not found");
                 return NotFound();
             }
-
             return visit.ToDTO();
         }
 
@@ -86,7 +83,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<VisitDTO>> Post([FromBody] CreateVisitRequestDTO dto)
         {
-            log.Debug("Trying to create a visit");
             var createdVisit = await service.CreateVisit(dto.FromDTO());
             return CreatedAtRoute("GetVisit", new { id = createdVisit.Id }, createdVisit.ToDTO());
         }
@@ -111,7 +107,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Put(string id, [FromBody] UpdateVisitRequestDTO dto)
         {
-            log.Debug($"Trying to edit visit {id}");
             await service.UpdateVisit(dto.FromDTO(id));
             return NoContent();
         }
@@ -129,7 +124,6 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(204)]
         public async Task<ActionResult> Delete(string id)
         {
-            log.Debug($"Deleting visit {id}");
             await service.DeleteVisit(id);
             return NoContent();
         }
