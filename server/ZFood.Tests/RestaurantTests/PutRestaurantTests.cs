@@ -24,13 +24,13 @@ namespace ZFood.Tests
         [InlineData("12", "Update Test 3", "Update Test 3")]
         public async Task TestPutRestaurant(string id, string name, string address)
         {
-            var request = new UpdateRestaurantRequestDTO
+            var updateRestaurantRequest = new UpdateRestaurantRequestDTO
             {
                 Name = name,
                 Address = address,
             };
             var url = $"{Url}/{id}";
-            var updateResponse = await client.PutAsJsonAsync(url, request);
+            var updateResponse = await client.PutAsJsonAsync(url, updateRestaurantRequest);
             Assert.Equal(HttpStatusCode.NoContent, updateResponse.StatusCode);
         }
     }

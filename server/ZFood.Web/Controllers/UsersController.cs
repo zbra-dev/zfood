@@ -30,11 +30,18 @@ namespace ZFood.Web.Controllers
         /// <response code="200">
         /// Returned code when a page, with the given parameters, can be build successfully
         /// </response>
+        /// <response code="400">
+        /// Returned code when skip and take parameters are invalid. Note that skip and take must be greater than zero
+        /// </response>
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count, string query)
+        public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count = false, string query = null)
         {
+            if (take < 0 || skip < 0)
+            {
+                return BadRequest("Skip and Take must be greater than zero"); // TODO: Figure out a better way to validate this.
+            }
             var page = await service.Get(skip, take, count, query);
             return page.ToDTO(u => u.ToDTO());
         }
@@ -76,6 +83,7 @@ namespace ZFood.Web.Controllers
         /// </response>
         /// <response code="400">
         /// Returned code when trying to create a new User with the same properties of an already existing User
+        /// or when creating a User with an invalid provider
         /// </response>
         /// <returns></returns>
         [HttpPost]
@@ -91,7 +99,7 @@ namespace ZFood.Web.Controllers
         /// <summary>
         /// Updates a User with the given data
         /// </summary>
-        /// <param name="id">Id of the User to be updated. Be sure that this User already exists</param>
+        /// <param name="id">Id of the User to be updated.</param>
         /// <param name="dto">Contains the data of the User to be changed</param>
         /// <response code="204">
         /// Returned code when the User can be updated successfully

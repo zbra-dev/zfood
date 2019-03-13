@@ -91,7 +91,7 @@ namespace ZFood.Web.Controllers
         /// <summary>
         /// Updates a Visit with the given data
         /// </summary>
-        /// <param name="id">Id of the Visit to be updated. Be sure that this Visit already exists</param>
+        /// <param name="id">Id of the Visit to be updated.</param>
         /// <param name="dto">Contains the data of the Visit to be changed</param>
         /// <response code="204">
         /// Returned code when the Visit can be updated successfully

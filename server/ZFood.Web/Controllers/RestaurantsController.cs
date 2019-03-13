@@ -1,10 +1,10 @@
 using log4net;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ZFood.Core.API;
 using ZFood.Web.DTO;
 using ZFood.Web.Extensions;
-using ZFood.Web.Factory;
 
 namespace ZFood.Web.Controllers
 {
@@ -31,14 +31,18 @@ namespace ZFood.Web.Controllers
         /// <response code="200">
         /// Returned code when a page, with the given parameters, can be build successfully
         /// </response>
+        /// <response code="400">
+        /// Returned code when skip and take parameters are invalid. Note that skip and take must be greater than zero
+        /// </response>
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<PageDTO<RestaurantDTO>>> Get(int take, int skip, bool count = false, string query = null)
         {
-			if (take < 0 || skip < 0)
+            if (take < 0 || skip < 0)
             {
-                return BadRequest();
+                return BadRequest("Skip and Take must be greater than zero"); // TODO: Figure out a better way to validate this.
             }
             var page = await service.Get(take, skip, count, query);
             return page.ToDTO(r => r.ToDTO());
@@ -96,7 +100,7 @@ namespace ZFood.Web.Controllers
         /// <summary>
         /// Updates a Restaurant with the given data
         /// </summary>
-        /// <param name="id">Id of the Restaurant to be updated. Be sure that this Restaurant exists</param>
+        /// <param name="id">Id of the Restaurant to be updated.</param>
         /// <param name="dto">Contains the data of the Restaurant to be changed</param>
         /// <response code="204">
         /// Returned code when the Restaurant can be updated successfully
