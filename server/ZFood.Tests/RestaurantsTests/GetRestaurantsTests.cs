@@ -56,6 +56,7 @@ namespace ZFood.Tests
         [InlineData("10")]
         [InlineData("15")]
         [InlineData("20")]
+        [InlineData("25")]
         public async Task TestGetRestaurant(string id)
         {
             var url = $"{Url}/{id}";
@@ -69,7 +70,8 @@ namespace ZFood.Tests
         [InlineData("-1000")]
         [InlineData("test")]
         [InlineData("#test@")]
-        public async Task TestGetNonexistentRestaurant(string id)
+        [InlineData("!test*")]
+        public async Task TestGetRestaurantWithInvalidId(string id)
         {
             var url = HttpUtility.UrlEncode($"{Url}/{id}");
             var response = await client.GetAsync(url);

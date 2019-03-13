@@ -27,5 +27,14 @@ namespace ZFood.Tests
             var deleteResponse = await client.DeleteAsync(url);
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
         }
+
+        [Theory]
+        [InlineData("")]
+        public async Task TestDeleteRestaurantWithEmptyId(string id)
+        {
+            var url = $"{Url}/{id}";
+            var deleteResponse = await client.DeleteAsync(url);
+            Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+        }
     }
 }
