@@ -25,23 +25,23 @@ namespace ZFood.Tests
         [InlineData("Name Test 3", "Address Test 3")]
         public async Task TestPostRestaurant(string name, string address)
         {
-            var restaurant = new CreateRestaurantRequestDTO
+            var createRestaurantRequest = new CreateRestaurantRequestDTO
             {
                 Name = name,
                 Address = address,
             };
-            var creationResponse = await client.PostAsJsonAsync(Url, restaurant);
+            var creationResponse = await client.PostAsJsonAsync(Url, createRestaurantRequest);
             Assert.Equal(HttpStatusCode.Created, creationResponse.StatusCode);
             Assert.NotNull(creationResponse.Headers.Location);
 
-            var findResponse = await client.GetAsync(creationResponse.Headers.Location);
-            Assert.Equal(HttpStatusCode.OK, findResponse.StatusCode);
-            Assert.Equal("application/json; charset=utf-8", findResponse.Content.Headers.ContentType.ToString());
-
-            var foundRestaurant = await findResponse.Content.ReadAsAsync<RestaurantDTO>();
-            Assert.NotNull(foundRestaurant);
-            Assert.Equal(name, foundRestaurant.Name);
-            Assert.Equal(address, foundRestaurant.Address);
+            var newlyCreatedRestaurantResponse = await client.GetAsync(creationResponse.Headers.Location);
+            Assert.Equal(HttpStatusCode.OK, newlyCreatedRestaurantResponse.StatusCode);
+            Assert.Equal("application/json; charset=utf-8", newlyCreatedRestaurantResponse.Content.Headers.ContentType.ToString());
+            
+            var newlyCreatedRestaurant = await newlyCreatedRestaurantResponse.Content.ReadAsAsync<RestaurantDTO>();
+            Assert.NotNull(newlyCreatedRestaurant);
+            Assert.Equal(name, newlyCreatedRestaurant.Name);
+            Assert.Equal(address, newlyCreatedRestaurant.Address);
         }
 
         [Theory]
@@ -50,12 +50,12 @@ namespace ZFood.Tests
         [InlineData("", "")]
         public async Task TestPostRestaurantWithEmptyValues(string name, string address)
         {
-            var restaurant = new CreateRestaurantRequestDTO
+            var createRestaurantRequest = new CreateRestaurantRequestDTO
             {
                 Name = name,
                 Address = address,
             };
-            var creationResponse = await client.PostAsJsonAsync(Url, restaurant);
+            var creationResponse = await client.PostAsJsonAsync(Url, createRestaurantRequest);
             Assert.Equal(HttpStatusCode.BadRequest, creationResponse.StatusCode);
         }
 
@@ -65,12 +65,14 @@ namespace ZFood.Tests
         [InlineData("Name Test 3", "Address Test 3")]
         public async Task TestPostRestaurantThatAlreadyExists(string name, string address)
         {
-            var restaurant = new CreateRestaurantRequestDTO
+            var createRestaurantRequest = new CreateRestaurantRequestDTO
             {
                 Name = name,
                 Address = address,
             };
-            var creationResponse = await client.PostAsJsonAsync(Url, restaurant);
+            await client.PostAsJsonAsync(Url, createRestaurantRequest);
+            // Posting twice intentionally
+            var creationResponse = await client.PostAsJsonAsync(Url, createRestaurantRequest);
             Assert.Equal(HttpStatusCode.BadRequest, creationResponse.StatusCode);
         }
     }
