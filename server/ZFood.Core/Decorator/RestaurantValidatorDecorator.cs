@@ -23,9 +23,10 @@ namespace ZFood.Core.Decorator
             return await restaurantService.CreateRestaurant(restaurant);
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            return restaurantService.Delete(id);
+            await restaurantValidatorFactory.CreateDeleteRestaurantValidator().ThrowIfNotValid(id);
+            await restaurantService.Delete(id);
         }
 
         public async Task<Restaurant> FindById(string id)
