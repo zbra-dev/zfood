@@ -7,5 +7,7 @@ namespace ZFood.Core.Validators
         IValidator<CreateVisitRequest> CreateVisitCreationValidator();
 
         IValidator<UpdateVisitRequest> CreateUpdateVisitValidator();
+
+        IValidator<string> CreateDeleteVisitValidator();
     }
 }

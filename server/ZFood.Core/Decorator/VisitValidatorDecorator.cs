@@ -31,6 +31,7 @@ namespace ZFood.Core.Decorator
 
         public async Task DeleteVisit(string id)
         {
+            await visitValidatorFactory.CreateDeleteVisitValidator().ThrowIfNotValid(id);
             await visitService.DeleteVisit(id);
         }
 

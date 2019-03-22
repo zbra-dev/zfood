@@ -4,13 +4,13 @@ using ZFood.Persistence.API;
 
 namespace ZFood.Core.Validators.Impl
 {
-    class DeleteRestaurantValidator : IValidator<string>
+    class DeleteVisitValidator : IValidator<string>
     {
-        private readonly IRestaurantRepository restaurantRepository;
+        private readonly IVisitRepository visitRepository;
 
-        public DeleteRestaurantValidator(IRestaurantRepository restaurantRepository)
+        public DeleteVisitValidator(IVisitRepository visitRepository)
         {
-            this.restaurantRepository = restaurantRepository;
+            this.visitRepository = visitRepository;
         }
 
         public async Task<ValidatorResult> Validate(string id)
