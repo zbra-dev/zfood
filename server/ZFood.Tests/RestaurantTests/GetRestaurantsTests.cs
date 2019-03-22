@@ -6,7 +6,7 @@ using System.Web;
 using Xunit;
 using ZFood.Web.DTO;
 
-namespace ZFood.Tests
+namespace ZFood.Tests.RestaurantTests
 {
     public class GetRestaurantsTests
         : IClassFixture<IntegrationTestsWebApplicationFactory<Web.Startup>>

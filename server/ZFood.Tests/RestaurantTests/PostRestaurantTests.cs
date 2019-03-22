@@ -5,7 +5,7 @@ using Xunit;
 using ZFood.Core.API;
 using ZFood.Web.DTO;
 
-namespace ZFood.Tests
+namespace ZFood.Tests.RestaurantTests
 {
     public class PostRestaurantTests
         : IClassFixture<IntegrationTestsWebApplicationFactory<Web.Startup>>

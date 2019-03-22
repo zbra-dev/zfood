@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ZFood.Tests
+namespace ZFood.Tests.RestaurantTests
 {
     public class DeleteRestaurantTests
         : IClassFixture<IntegrationTestsWebApplicationFactory<Web.Startup>>

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Xunit;
 using ZFood.Web.DTO;
 
-namespace ZFood.Tests
+namespace ZFood.Tests.RestaurantTests
 {
     public class PutRestaurantTests
         : IClassFixture<IntegrationTestsWebApplicationFactory<Web.Startup>>
