@@ -20,9 +20,9 @@ namespace ZFood.Tests.RestaurantTests
         }
 
         [Theory]
-        [InlineData("Name Test 1", "Address Test 1")]
-        [InlineData("Name Test 2", "Address Test 2")]
-        [InlineData("Name Test 3", "Address Test 3")]
+        [InlineData("Name Test 10", "Address Test 10")]
+        [InlineData("Name Test 20", "Address Test 20")]
+        [InlineData("Name Test 30", "Address Test 30")]
         public async Task TestPostRestaurant(string name, string address)
         {
             var createRestaurantRequest = new CreateRestaurantRequestDTO
