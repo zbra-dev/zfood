@@ -22,5 +22,10 @@ namespace ZFood.Core.Validators
         {
             return new UpdateUserValidator(repository);
         }
+
+        public IValidator<string> CreateDeleteUserValidator()
+        {
+            return new DeleteUserValidator(repository);
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace ZFood.Core.Decorator
 
         public async Task DeleteUser(string id)
         {
+            await userValidatorFactory.CreateDeleteUserValidator().ThrowIfNotValid(id);
             await userService.DeleteUser(id);
         }
 
