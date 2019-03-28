@@ -35,9 +35,10 @@ namespace ZFood.Core.Decorator
             return restaurant;
         }
 
-        public Task<Page<Restaurant>> Get(int take, int skip, bool count, string query)
+        public async Task<Page<Restaurant>> Get(PageRequest pageRequest)
         {
-            return restaurantService.Get(take, skip, count, query);
+            await restaurantValidatorFactory.CreateSearchEntityValidator().ThrowIfNotValid(pageRequest);
+            return await restaurantService.Get(pageRequest);
         }
 
         public async Task UpdateRestaurant(UpdateRestaurantRequest restaurantRequest)

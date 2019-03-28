@@ -13,6 +13,11 @@ namespace ZFood.Core.Validators
             this.repository = repository;
         }
 
+        public IValidator<PageRequest> CreateSearchEntityValidator()
+        {
+            return new SearchEntityValidator();
+        }
+
         public IValidator<CreateRestaurantRequest> CreateRestaurantCreationValidator()
         {
             return new CreateRestaurantValidator(repository);

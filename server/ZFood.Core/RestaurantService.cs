@@ -22,22 +22,22 @@ namespace ZFood.Core
             return entity?.ToModel();
         }
 
-        public async Task<Page<Restaurant>> Get(int take, int skip, bool count, string query)
+        public async Task<Page<Restaurant>> Get(PageRequest request)
         {
-            var increasedTake = take + 1;
-            var entities = await repository.Get(increasedTake, skip, query);
+            var increasedTake = request.Take + 1;
+            var entities = await repository.Get(increasedTake, request.Skip, request.Query);
             var restaurants = entities.Select(r => r.ToModel()).ToArray();
             var hasMore = restaurants.Length == increasedTake;
             int? totalCount = null;
 
-            if (count)
+            if (request.Count)
             {
                 totalCount = await repository.GetTotalCount();
             }
             
             return new Page<Restaurant>
             {
-                Items = restaurants.Take(take),
+                Items = restaurants.Take(request.Take),
                 HasMore = hasMore,
                 TotalCount = totalCount,
             };
