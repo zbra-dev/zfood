@@ -10,11 +10,15 @@ namespace ZFood.Core.Decorator
     {
         private readonly IUserService userService;
         private readonly IUserValidatorFactory userValidatorFactory;
+        private readonly IPageRequestValidatorFactory pageRequestValidatorFactory;
 
-        public UserValidatorDecorator(IUserService userService, IUserValidatorFactory userValidatorFactory)
+        public UserValidatorDecorator(IUserService userService, 
+            IUserValidatorFactory userValidatorFactory,
+            IPageRequestValidatorFactory pageRequestValidatorFactory)
         {
             this.userService = userService;
             this.userValidatorFactory = userValidatorFactory;
+            this.pageRequestValidatorFactory = pageRequestValidatorFactory;
         }
 
         public async Task<User> CreateUser(CreateUserRequest userRequest)
@@ -39,9 +43,10 @@ namespace ZFood.Core.Decorator
             return userService.FindByProviderId(provider, providerId);
         }
 
-        public async Task<Page<User>> Get(int skip, int take, bool count, string query)
+        public async Task<Page<User>> Get(PageRequest pageRequest)
         {
-            return await userService.Get(skip, take, count, query);
+            await pageRequestValidatorFactory.CreatePageRequestValidator().ThrowIfNotValid(pageRequest);
+            return await userService.Get(pageRequest);
         }
 
         public async Task UpdateUser(UpdateUserRequest user)

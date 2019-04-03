@@ -33,10 +33,22 @@ namespace ZFood.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<PageDTO<VisitDTO>>> Get(int skip, int take, bool count, string query)
+        public async Task<ActionResult<PageDTO<VisitDTO>>> Get(int skip, int take, bool count = false, string query = null)
         {
-            var page = await service.Get(skip, take, count, query);
+            var pageRequest = BuildPageRequest(skip, take, count, query);
+            var page = await service.Get(pageRequest);
             return page.ToDTO(v => v.ToDTO());
+        }
+
+        private PageRequest BuildPageRequest(int skip, int take, bool count, string query)
+        {
+            return new PageRequest
+            {
+                Skip = skip,
+                Take = take,
+                Count = count,
+                Query = query
+            };
         }
 
         // GET /Visit/5

@@ -9,7 +9,7 @@ namespace ZFood.Core.API
 
         Task<User> FindByProviderId(CredentialsProvider provider, string providerId);
 
-        Task<Page<User>> Get(int skip, int take, bool count, string query);
+        Task<Page<User>> Get(PageRequest pageRequest);
 
         Task<User> CreateUser(CreateUserRequest userRequest);
 

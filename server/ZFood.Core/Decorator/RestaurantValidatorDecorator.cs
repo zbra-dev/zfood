@@ -10,11 +10,15 @@ namespace ZFood.Core.Decorator
     {
         private readonly IRestaurantService restaurantService;
         private readonly IRestaurantValidatorFactory restaurantValidatorFactory;
+        private readonly IPageRequestValidatorFactory pageRequestValidatorFactory;
 
-        public RestaurantValidatorDecorator(IRestaurantService restaurantService, IRestaurantValidatorFactory restaurantValidatorFactory)
+        public RestaurantValidatorDecorator(IRestaurantService restaurantService, 
+            IRestaurantValidatorFactory restaurantValidatorFactory,
+            IPageRequestValidatorFactory pageRequestValidatorFactory)
         {
             this.restaurantService = restaurantService;
             this.restaurantValidatorFactory = restaurantValidatorFactory;
+            this.pageRequestValidatorFactory = pageRequestValidatorFactory;
         }
 
         public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequest restaurant)
@@ -37,7 +41,7 @@ namespace ZFood.Core.Decorator
 
         public async Task<Page<Restaurant>> Get(PageRequest pageRequest)
         {
-            await restaurantValidatorFactory.CreateSearchEntityValidator().ThrowIfNotValid(pageRequest);
+            await pageRequestValidatorFactory.CreatePageRequestValidator().ThrowIfNotValid(pageRequest);
             return await restaurantService.Get(pageRequest);
         }
 

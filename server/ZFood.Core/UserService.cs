@@ -28,15 +28,15 @@ namespace ZFood.Core
             return entity?.ToModel();
         }
 
-        public async Task<Page<User>> Get(int skip, int take, bool count, string query)
+        public async Task<Page<User>> Get(PageRequest pageRequest)
         {
-            var increasedTake = take++;
-            var userEntities = await repository.Get(skip, increasedTake, query);
+            var increasedTake = pageRequest.Take++;
+            var userEntities = await repository.Get(pageRequest.Skip, increasedTake, pageRequest.Query);
             var users = userEntities.Select(u => u.ToModel()).ToArray();
             var hasMore = users.Length == increasedTake;
             int? totalCount = null;
 
-            if (count)
+            if (pageRequest.Count)
             {
                 totalCount = await repository.GetTotalCount();
             }

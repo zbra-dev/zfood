@@ -38,12 +38,20 @@ namespace ZFood.Web.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<PageDTO<UserDTO>>> Get(int skip, int take, bool count = false, string query = null)
         {
-            if (take < 0 || skip < 0)
-            {
-                return BadRequest("Skip and Take must be greater than zero"); // TODO: Figure out a better way to validate this.
-            }
-            var page = await service.Get(skip, take, count, query);
+            var pageRequest = BuildPageRequest(skip, take, count, query);
+            var page = await service.Get(pageRequest);
             return page.ToDTO(u => u.ToDTO());
+        }
+
+        private PageRequest BuildPageRequest(int skip, int take, bool count, string query)
+        {
+            return new PageRequest
+            {
+                Skip = skip,
+                Take = take,
+                Count = count,
+                Query = query
+            };
         }
 
         // GET user/5

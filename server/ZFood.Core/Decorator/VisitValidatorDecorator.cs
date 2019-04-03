@@ -10,11 +10,15 @@ namespace ZFood.Core.Decorator
     {
         private readonly IVisitService visitService;
         private readonly IVisitValidatorFactory visitValidatorFactory;
+        private readonly IPageRequestValidatorFactory pageRequestValidatorFactory;
 
-        public VisitValidatorDecorator(IVisitService visitService, IVisitValidatorFactory visitValidatorFactory)
+        public VisitValidatorDecorator(IVisitService visitService,
+            IVisitValidatorFactory visitValidatorFactory,
+            IPageRequestValidatorFactory pageRequestValidatorFactory)
         {
             this.visitService = visitService;
             this.visitValidatorFactory = visitValidatorFactory;
+            this.pageRequestValidatorFactory = pageRequestValidatorFactory;
         }
 
         public async Task<Visit> CreateVisit(CreateVisitRequest createVisitRequest)
@@ -40,9 +44,10 @@ namespace ZFood.Core.Decorator
             return await visitService.FindById(id);
         }
 
-        public async Task<Page<Visit>> Get(int skip, int take, bool count, string query)
+        public async Task<Page<Visit>> Get(PageRequest pageRequest)
         {
-            return await visitService.Get(skip, take, count, query);
+            await pageRequestValidatorFactory.CreatePageRequestValidator().ThrowIfNotValid(pageRequest);
+            return await visitService.Get(pageRequest);
         }
     }
 }

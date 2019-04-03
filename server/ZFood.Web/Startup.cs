@@ -75,6 +75,7 @@ namespace ZFood.Web
             services.AddTransient<IRestaurantValidatorFactory, RestaurantValidatorFactory>();
             services.AddTransient<IVisitValidatorFactory, VisitValidatorFactory>();
             services.AddTransient<IUserValidatorFactory, UserValidatorFactory>();
+            services.AddTransient<IPageRequestValidatorFactory, PageRequestValidatorFactory>();
 
             // API
             services.AddTransient<IRestaurantService>(provider =>
@@ -83,9 +84,11 @@ namespace ZFood.Web
                 var repositoryProxy = LoggerAdviceFactory<IRestaurantRepository>.CreateLoggerAdvice(restaurantRepository);
                 var service = new RestaurantService(repositoryProxy);
                 var serviceProxy = LoggerAdviceFactory<IRestaurantService>.CreateLoggerAdvice(service);
-                var factory = provider.GetService<IRestaurantValidatorFactory>();
-                var factoryProxy = LoggerAdviceFactory<IRestaurantValidatorFactory>.CreateLoggerAdvice(factory);
-                var decorator = new RestaurantValidatorDecorator(serviceProxy, factoryProxy);                
+                var restaurantValidatorFactory = provider.GetService<IRestaurantValidatorFactory>();
+                var restaurantValidatorFactoryProxy = LoggerAdviceFactory<IRestaurantValidatorFactory>.CreateLoggerAdvice(restaurantValidatorFactory);
+                var pageFactory = provider.GetService<IPageRequestValidatorFactory>();
+                var pageFactoryProxy = LoggerAdviceFactory<IPageRequestValidatorFactory>.CreateLoggerAdvice(pageFactory);
+                var decorator = new RestaurantValidatorDecorator(serviceProxy, restaurantValidatorFactoryProxy, pageFactoryProxy);                
                 return LoggerAdviceFactory<IRestaurantService>.CreateLoggerAdvice(decorator);
             });
             services.AddTransient<IVisitService>(provider =>
@@ -98,8 +101,9 @@ namespace ZFood.Web
                 var userRepositoryProxy = LoggerAdviceFactory<IUserRepository>.CreateLoggerAdvice(userRepository);
                 var service = new VisitService(visitRepositoryProxy, restaurantRepositoryProxy, userRepositoryProxy);
                 var serviceProxy = LoggerAdviceFactory<IVisitService>.CreateLoggerAdvice(service);
-                var factory = provider.GetService<IVisitValidatorFactory>();
-                var decorator = new VisitValidatorDecorator(serviceProxy, factory);
+                var visitValidatorFactory = provider.GetService<IVisitValidatorFactory>();
+                var pageValidatorFactory = provider.GetService<IPageRequestValidatorFactory>();
+                var decorator = new VisitValidatorDecorator(serviceProxy, visitValidatorFactory, pageValidatorFactory);
                 return LoggerAdviceFactory<IVisitService>.CreateLoggerAdvice(decorator);
             });
             services.AddTransient<IUserService>(provider =>
@@ -108,8 +112,9 @@ namespace ZFood.Web
                 var userRepositoryProxy = LoggerAdviceFactory<IUserRepository>.CreateLoggerAdvice(userRepository);
                 var service = new UserService(userRepositoryProxy);
                 var serviceProxy = LoggerAdviceFactory<IUserService>.CreateLoggerAdvice(service);
-                var factory = provider.GetService<IUserValidatorFactory>();
-                var decorator = new UserValidatorDecorator(serviceProxy, factory);
+                var userValidatorFactory = provider.GetService<IUserValidatorFactory>();
+                var pageValidatorFactory = provider.GetService<IPageRequestValidatorFactory>();
+                var decorator = new UserValidatorDecorator(serviceProxy, userValidatorFactory, pageValidatorFactory);
                 return LoggerAdviceFactory<IUserService>.CreateLoggerAdvice(decorator);
             });
 
